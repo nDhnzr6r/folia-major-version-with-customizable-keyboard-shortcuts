@@ -3394,7 +3394,7 @@ export default {
     "goToGithubRelease": "前往Github下载页",
     "chinaDownloadHint": "提示：下载需直连 GitHub（可能较慢），国内环境推荐使用夸克或百度网盘。",
     "macManualUpdateNotice": "提示：macOS 版本需要下载完整安装包手动覆盖更新。",
-    "linuxManualUpdateNotice": "提示：Linux 不支持自动更新。请下载完整的 deb、rpm 或 tar.gz 包手动升级；仅正式版且通过 AUR 安装的用户可使用包管理器升级 folia-major-bin。",
+    "linuxManualUpdateNotice": "提示：Linux 不支持自动更新。请下载完整的 deb、rpm 或 tar.gz 包手动升级。",
     "manualUpdateNotice": "提示：当前平台暂不支持自动更新，请下载安装包手动覆盖更新。",
     "unofficialBuildNotice": "非官方构建：这个版本既不是 Folia 仓库的 CI 构建的，也不是文档里的自部署方式（Docker、Vercel、Cloudflare），可能经过他人修改或缺少后端服务。遇到问题请先联系提供者，官方版本请从 GitHub Releases 下载。",
     "selfHostedBuildNotice": "自部署版本：由部署者自行构建并托管，音乐平台的后端服务也由部署者配置。遇到问题请先联系部署者；确认是 Folia 本身的问题再到 GitHub 反馈。",
@@ -4773,7 +4773,7 @@ export default {
     "copyPrompt": "复制提示词",
     "copyPromptTitle": "1. 复制 AI 提示词",
     "importJsonTitle": "2. 粘贴并导入 JSON",
-    "prompt": "我正在使用 GitHub 上的 folia-major 音乐播放器，遇到了一个问题，需要你协助排查。\n\nFolia 使用指南：{{guideUrl}}\nFolia 源码仓库：{{repoUrl}}\n\n请把这些资料作为上下文，结合我接下来描述的问题，帮我判断可能原因并给出处理步骤。如果信息不足，请先询问我需要补充什么，不要直接做不确定的假设。"
+    "prompt": "我正在使用 GitHub 上的 Folia可以自定义快捷键版 音乐播放器，遇到了一个问题，需要你协助排查。\n\nFolia 使用指南：{{guideUrl}}\nFolia 源码仓库：{{repoUrl}}\n\n请把这些资料作为上下文，结合我接下来描述的问题，帮我判断可能原因并给出处理步骤。如果信息不足，请先询问我需要补充什么，不要直接做不确定的假设。"
   },
   "ponder": {
     "openPage": "思索当前页面",

@@ -3393,7 +3393,7 @@ export default {
     "goToGithubRelease": "Buka halaman rilis GitHub",
     "chinaDownloadHint": "Catatan: Unduhan GitHub mungkin lambat di Tiongkok. Gunakan Quark Drive atau Baidu Drive sebagai gantinya.",
     "macManualUpdateNotice": "Catatan: macOS memerlukan pengunduhan installer lengkap secara manual untuk memperbarui.",
-    "linuxManualUpdateNotice": "Linux tidak mendukung pembaruan otomatis. Unduh paket deb, rpm, atau tar.gz lengkap untuk memperbarui secara manual; hanya instalasi AUR stabil yang boleh memperbarui folia-major-bin melalui pengelola paket.",
+    "linuxManualUpdateNotice": "Linux tidak mendukung pembaruan otomatis. Unduh paket deb, rpm, atau tar.gz lengkap untuk memperbarui secara manual.",
     "manualUpdateNotice": "Catatan: Pembaruan otomatis tidak didukung di platform ini. Silakan unduh paket secara manual.",
     "unofficialBuildNotice": "Build tidak resmi: versi ini tidak dibangun oleh CI repositori Folia maupun di-deploy lewat cara self-hosting yang terdokumentasi (Docker, Vercel, Cloudflare), dan mungkin telah dimodifikasi atau tidak memiliki layanan backend. Hubungi pihak yang menyediakannya terlebih dahulu; build resmi ada di GitHub Releases.",
     "selfHostedBuildNotice": "Self-hosted: dibangun dan di-hosting oleh pihak yang men-deploy, termasuk layanan backend platform musik. Hubungi pihak tersebut terlebih dahulu, dan laporkan di GitHub jika memang masalah Folia.",
@@ -4773,7 +4773,7 @@ export default {
     "copyPrompt": "Salin prompt",
     "copyPromptTitle": "1. Salin Prompt AI",
     "importJsonTitle": "2. Tempel Hasil JSON",
-    "prompt": "Saya menggunakan pemutar musik folia-major di GitHub dan perlu bantuan untuk masalah.\n\nPanduan Folia: {{guideUrl}}\nRepositori Folia: {{repoUrl}}\n\nHarap gunakan referensi ini sebagai konteks, lalu bantu saya memahami dan menyelesaikan masalah yang saya jelaskan berikutnya. Jika ada informasi yang kurang, tanyakan apa yang harus saya berikan sebelum membuat asumsi yang tidak pasti."
+    "prompt": "Saya menggunakan pemutar musik Folia (versi pintasan yang bisa disesuaikan) di GitHub dan perlu bantuan untuk masalah.\n\nPanduan Folia: {{guideUrl}}\nRepositori Folia: {{repoUrl}}\n\nHarap gunakan referensi ini sebagai konteks, lalu bantu saya memahami dan menyelesaikan masalah yang saya jelaskan berikutnya. Jika ada informasi yang kurang, tanyakan apa yang harus saya berikan sebelum membuat asumsi yang tidak pasti."
   },
   "ponder": {
     "openPage": "Ponder halaman ini",

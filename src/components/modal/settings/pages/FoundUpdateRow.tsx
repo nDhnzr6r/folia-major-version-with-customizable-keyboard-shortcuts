@@ -2,16 +2,13 @@ import React, { useId, useRef, useState } from 'react';
 import { ChevronDown, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button, Menu, Progress, Reveal, Row } from '../kit';
-import { openOutsideLink } from '../../../../utils/system/outsideLink';
 import { useSettingsPage } from './settingsPageContext';
 
 // src/components/modal/settings/pages/FoundUpdateRow.tsx
-// The row a found update gets, on the 通用 page and on the Help page: the new version, the list of
-// places to download it from (pages outside the app, with notes under the list), and what the app
-// itself can do with it: download it, show how far the download has come, restart to install. It
-// unfolds once the update check has found a version.
-
-const AUR_PACKAGE_URL = 'https://aur.archlinux.org/packages/folia-major-bin';
+// The row a found update gets, on the 通用 page and on the Help page: the new version, the place to
+// download it from (pages outside the app, with a note under it), and what the app itself can do
+// with it: download it, show how far the download has come, restart to install. It unfolds once the
+// update check has found a version.
 
 type FoundUpdateRowProps = {
     /** Under the row above it: indented. */
@@ -35,35 +32,21 @@ export const FoundUpdateRow: React.FC<FoundUpdateRowProps> = ({ sub }) => {
     const autoUpdateSupported = Boolean(updateStatus?.autoUpdateSupported);
     const isDownloading = updateStatus?.status === 'downloading';
     const isDownloaded = updateStatus?.status === 'downloaded';
-    const isLinuxBuild = updateStatus?.platform === 'linux';
-    const isStableChannel = electronSettings.UPDATE_CHANNEL === 'realeco';
-    // The two drives are offered for the stable channel, and not on Linux.
-    const offersDrives = isStableChannel && !isLinuxBuild;
     // What a found version needs from the listener where the app cannot update itself.
     const manualNotice = updateStatus?.platform === 'darwin'
         ? t('options.macManualUpdateNotice')
-        : isLinuxBuild
+        : updateStatus?.platform === 'linux'
             ? t('options.linuxManualUpdateNotice')
             : autoUpdateSupported ? null : t('options.manualUpdateNotice');
 
     const sources = [
-        ...(offersDrives ? [
-            { id: 'quark', label: t('options.quarkDrive'), onSelect: () => void update.onOpenChinaDownload() },
-            { id: 'baidu', label: t('options.baiduDrive'), onSelect: () => void update.onOpenBaiduDownload() },
-        ] : []),
         {
             id: 'github',
             label: t(autoUpdateSupported ? 'options.githubRelease' : 'options.fullInstallerGithub'),
             onSelect: () => void window.electron?.openUpdateReleasePage(version),
         },
-        ...(isLinuxBuild && isStableChannel ? [
-            { id: 'aur', label: t('options.aurPackage'), onSelect: () => openOutsideLink(AUR_PACKAGE_URL) },
-        ] : []),
     ].map(source => ({ ...source, end: <ExternalLink size={14} /> }));
-    const notes = [
-        ...(manualNotice ? [manualNotice] : []),
-        ...(offersDrives ? [t('options.chinaDownloadHint')] : []),
-    ];
+    const notes = manualNotice ? [manualNotice] : [];
     // The updater gives no usable percent while it does not know the size.
     const reported = updateStatus?.downloadProgress?.percent;
     const percent = typeof reported === 'number' && Number.isFinite(reported) ? reported : 0;

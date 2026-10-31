@@ -14,11 +14,11 @@ const PLAYER_INTERFACE = 'org.mpris.MediaPlayer2.Player';
 const PROPERTIES_INTERFACE = 'org.freedesktop.DBus.Properties';
 const INTROSPECTABLE_INTERFACE = 'org.freedesktop.DBus.Introspectable';
 const PEER_INTERFACE = 'org.freedesktop.DBus.Peer';
-const BUS_NAME_BASE = 'org.mpris.MediaPlayer2.folia';
+const BUS_NAME_BASE = 'org.mpris.MediaPlayer2.folia-custom-shortcuts';
 const NO_TRACK_PATH = '/org/mpris/MediaPlayer2/TrackList/NoTrack';
 const IDENTITY = 'Folia';
 // package.json 的 desktopName 去掉 .desktop。
-const DESKTOP_ENTRY = 'folia-major';
+const DESKTOP_ENTRY = 'folia-custom-shortcuts';
 const REQUEST_NAME_DO_NOT_QUEUE = 4;
 const REQUEST_NAME_PRIMARY_OWNER = 1;
 const REQUEST_NAME_ALREADY_OWNER = 4;

@@ -3393,7 +3393,7 @@ export default {
     "goToGithubRelease": "Go to GitHub release page",
     "chinaDownloadHint": "Note: GitHub downloads may be slow in China. Use Quark Drive or Baidu Drive instead.",
     "macManualUpdateNotice": "Note: macOS requires downloading the full installer manually to update.",
-    "linuxManualUpdateNotice": "Linux does not support automatic updates. Download the complete deb, rpm, or tar.gz package to upgrade manually; only stable AUR installations should upgrade folia-major-bin through the package manager.",
+    "linuxManualUpdateNotice": "Linux does not support automatic updates. Download the complete deb, rpm, or tar.gz package to upgrade manually.",
     "manualUpdateNotice": "Note: Automatic update is not supported on this platform. Please download the package manually.",
     "unofficialBuildNotice": "Unofficial build: this version was neither built by the Folia repository's CI nor deployed through a documented self-hosting setup (Docker, Vercel, Cloudflare), and may be modified or missing its backend services. Please contact whoever provided it first; official builds are on GitHub Releases.",
     "selfHostedBuildNotice": "Self-hosted: built and hosted by whoever deployed it, including the music platform backends. Please contact the deployer first, and report on GitHub once it is clearly a Folia problem.",
@@ -4773,7 +4773,7 @@ export default {
     "copyPrompt": "Copy prompt",
     "copyPromptTitle": "1. Copy AI Prompt",
     "importJsonTitle": "2. Paste JSON Result",
-    "prompt": "I am using the folia-major music player on GitHub and need help with a problem.\n\nFolia Guide: {{guideUrl}}\nFolia repository: {{repoUrl}}\n\nPlease use these references as context, then help me understand and solve the problem I describe next. If any information is missing, ask what I should provide before making uncertain assumptions."
+    "prompt": "I am using the Folia music player (customizable shortcuts build) on GitHub and need help with a problem.\n\nFolia Guide: {{guideUrl}}\nFolia repository: {{repoUrl}}\n\nPlease use these references as context, then help me understand and solve the problem I describe next. If any information is missing, ask what I should provide before making uncertain assumptions."
   },
   "ponder": {
     "openPage": "Ponder this page",

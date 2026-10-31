@@ -114,7 +114,7 @@ const getProperty = async (connection: ReturnType<typeof createFakeConnection>, 
 const metadataOf = (variantValue: Variant) => Object.fromEntries((variantValue.value as Array<[string, Variant]>).map(([key, value]) => [key, value.value]));
 
 describe('createMprisService', () => {
-    it('stays off the bus until HiFi plays, then owns org.mpris.MediaPlayer2.folia with the properties in place', async () => {
+    it('stays off the bus until HiFi plays, then owns org.mpris.MediaPlayer2.folia-custom-shortcuts with the properties in place', async () => {
         const { service, connection, connect } = startService();
         service.update({ active: false });
         await flush();
@@ -122,8 +122,8 @@ describe('createMprisService', () => {
 
         service.update(playing());
         await flush();
-        expect(connection.owned).toEqual(new Set(['org.mpris.MediaPlayer2.folia']));
-        expect(connection.calls[0]).toEqual({ member: 'RequestName', signature: 'su', body: ['org.mpris.MediaPlayer2.folia', 4] });
+        expect(connection.owned).toEqual(new Set(['org.mpris.MediaPlayer2.folia-custom-shortcuts']));
+        expect(connection.calls[0]).toEqual({ member: 'RequestName', signature: 'su', body: ['org.mpris.MediaPlayer2.folia-custom-shortcuts', 4] });
         // The first owner read sees the track right away; no PropertiesChanged for the start.
         expect(connection.signals).toEqual([]);
         expect(await getProperty(connection, 'org.mpris.MediaPlayer2.Player', 'PlaybackStatus')).toEqual({ signature: 's', value: 'Playing' });
@@ -137,10 +137,10 @@ describe('createMprisService', () => {
     });
 
     it('takes .instance<pid> when another Folia owns the plain name', async () => {
-        const { service, connection } = startService(createFakeConnection({ taken: ['org.mpris.MediaPlayer2.folia'] }));
+        const { service, connection } = startService(createFakeConnection({ taken: ['org.mpris.MediaPlayer2.folia-custom-shortcuts'] }));
         service.update(playing());
         await flush();
-        expect(connection.owned).toEqual(new Set(['org.mpris.MediaPlayer2.folia.instance4242']));
+        expect(connection.owned).toEqual(new Set(['org.mpris.MediaPlayer2.folia-custom-shortcuts.instance4242']));
     });
 
     it('signals only what changed, never Position, and Seeked after a seek', async () => {
@@ -199,7 +199,7 @@ describe('createMprisService', () => {
         service.update({ active: false });
         await flush();
         expect(connection.owned.size).toBe(0);
-        expect(connection.calls.at(-1)).toEqual({ member: 'ReleaseName', signature: 's', body: ['org.mpris.MediaPlayer2.folia'] });
+        expect(connection.calls.at(-1)).toEqual({ member: 'ReleaseName', signature: 's', body: ['org.mpris.MediaPlayer2.folia-custom-shortcuts'] });
         service.update(playing());
         await flush();
         expect(connection.owned.size).toBe(1);
@@ -239,7 +239,7 @@ describe('createMprisService', () => {
             CanRaise: true,
             HasTrackList: false,
             Identity: 'Folia',
-            DesktopEntry: 'folia-major',
+            DesktopEntry: 'folia-custom-shortcuts',
             SupportedUriSchemes: [],
             SupportedMimeTypes: [],
         });

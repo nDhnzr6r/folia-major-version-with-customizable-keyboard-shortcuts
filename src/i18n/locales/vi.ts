@@ -3393,7 +3393,7 @@ export default {
     "goToGithubRelease": "Đến trang bản phát hành GitHub",
     "chinaDownloadHint": "Lưu ý: Tải từ GitHub tại Trung Quốc có thể chậm. Nên dùng Quark Drive hoặc Baidu Netdisk thay thế.",
     "macManualUpdateNotice": "Lưu ý: macOS yêu cầu tải thủ công bộ cài đầy đủ để cập nhật.",
-    "linuxManualUpdateNotice": "Linux không hỗ trợ cập nhật tự động. Tải gói deb, rpm hoặc tar.gz hoàn chỉnh để nâng cấp thủ công; chỉ bản cài đặt AUR ổn định mới nên nâng cấp folia-major-bin qua trình quản lý gói.",
+    "linuxManualUpdateNotice": "Linux không hỗ trợ cập nhật tự động. Tải gói deb, rpm hoặc tar.gz hoàn chỉnh để nâng cấp thủ công.",
     "manualUpdateNotice": "Lưu ý: Nền tảng này chưa hỗ trợ cập nhật tự động. Tải gói cài đặt thủ công để nâng cấp.",
     "unofficialBuildNotice": "Bản dựng không chính thức: phiên bản này không được build từ CI của repo Folia cũng như không triển khai theo hướng dẫn (Docker, Vercel, Cloudflare), có thể đã bị chỉnh sửa hoặc thiếu dịch vụ backend. Vui lòng liên hệ người cung cấp trước; bản chính thức có tại GitHub Releases.",
     "selfHostedBuildNotice": "Bản tự lưu trữ: do người triển khai tự build và quản lý, bao gồm cả backend nền tảng âm nhạc. Vui lòng liên hệ người triển khai trước; chỉ báo cáo lên GitHub khi xác định rõ là lỗi của Folia.",
@@ -4773,7 +4773,7 @@ export default {
     "copyPrompt": "Sao chép prompt",
     "copyPromptTitle": "1. Sao chép prompt AI",
     "importJsonTitle": "2. Dán kết quả JSON",
-    "prompt": "Tôi đang dùng trình phát nhạc folia-major trên GitHub và gặp sự cố cần hỗ trợ.\n\nHướng dẫn Folia: {{guideUrl}}\nKho mã nguồn Folia: {{repoUrl}}\n\nHãy dùng các tài liệu này làm ngữ cảnh, sau đó giúp tôi hiểu và giải quyết vấn đề được mô tả tiếp theo. Nếu thiếu thông tin, hãy hỏi tôi cần cung cấp thêm gì trước khi đưa ra phỏng đoán không chắc chắn."
+    "prompt": "Tôi đang dùng trình phát nhạc Folia (bản phím tắt tùy chỉnh) trên GitHub và gặp sự cố cần hỗ trợ.\n\nHướng dẫn Folia: {{guideUrl}}\nKho mã nguồn Folia: {{repoUrl}}\n\nHãy dùng các tài liệu này làm ngữ cảnh, sau đó giúp tôi hiểu và giải quyết vấn đề được mô tả tiếp theo. Nếu thiếu thông tin, hãy hỏi tôi cần cung cấp thêm gì trước khi đưa ra phỏng đoán không chắc chắn."
   },
   "ponder": {
     "openPage": "Khám phá trang này",

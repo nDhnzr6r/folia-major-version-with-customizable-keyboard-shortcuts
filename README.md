@@ -3,33 +3,26 @@
 </p>
 
 <div align="center">
-<a href="https://trendshift.io/repositories/71740?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-71740" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/71740" alt="chthollyphile%2Ffolia-major | Trendshift" width="250" height="55"/></a>
 
-# Folia
+# Folia可以自定义快捷键版
 
 Lyrics Reimagined // 辞曲新境
 
-简体中文 | [English](README.en.md)
-
-[![GitHub release](https://img.shields.io/github/v/release/chthollyphile/folia-major?label=release)](https://github.com/chthollyphile/folia-major/releases)
-[![License](https://img.shields.io/github/license/chthollyphile/folia-major)](https://github.com/chthollyphile/folia-major/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/chthollyphile/folia-major?style=social)](https://github.com/chthollyphile/folia-major/stargazers)
+[![GitHub release](https://img.shields.io/github/v/release/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts?label=release)](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases)
+[![License](https://img.shields.io/github/license/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts)](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/blob/main/LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D24-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/chthollyphile/folia-major)
-[![Discord](https://img.shields.io/discord/1541051241822687232?logo=discord&logoColor=white&label=Join%20our%20Discord)](https://discord.gg/dMDBTHxeKd)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](CONTRIBUTORS.md)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[获取方式](https://github.com/chthollyphile/folia-major#%E8%8E%B7%E5%8F%96%E6%96%B9%E5%BC%8F)
-·
-[Vercel 部署](https://vercel.com/new/clone?repository-url=https://github.com/chthollyphile/folia-major)
+[获取方式](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases)
 ·
 [使用指南](https://folia-site.cielaniska.top/guide/)
 ·
 [技术说明](docs/technical.md)
 
 </div>
+
+> 这是 [Folia](https://github.com/chthollyphile/folia-major) 的一个修改版本，遵循 AGPL-3.0。与原版的区别只有一处：全局快捷键的修饰键和按键由用户自己设定，不再固定为 Ctrl+Alt+Shift 加字母或数字。
+>
+> 其他功能、界面与使用方式与原版一致；原版文档仍然适用。遇到问题请在本仓库提 issue，不要提交到原版仓库。
 
 ## 项目简介
 
@@ -244,4 +237,6 @@ Folia 会读取音频文件元数据、同目录歌词和封面，并可通过�
 
 ## 许可证
 
-本项目基于 `AGPL-3.0` 许可证开源。
+本项目基于 `AGPL-3.0` 许可证开源，代码来自 [chthollyphile/folia-major](https://github.com/chthollyphile/folia-major)，本仓库是它的修改版本。
+
+按 AGPL-3.0 分发本仓库构建出的程序时，需要同时提供这份源码；修改时间与改动见本仓库的提交记录。

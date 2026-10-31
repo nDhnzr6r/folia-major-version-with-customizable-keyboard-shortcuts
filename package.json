@@ -1,14 +1,14 @@
 {
-  "name": "folia-major",
-  "productName": "Folia",
-  "desktopName": "folia-major.desktop",
-  "description": "Lyrics Reimagine",
+  "name": "folia-major-version-with-customizable-keyboard-shortcuts",
+  "productName": "Folia可以自定义快捷键版",
+  "desktopName": "folia-custom-shortcuts.desktop",
+  "description": "Lyrics Reimagine（Folia 的自定义全局快捷键版本）",
   "author": {
     "name": "chthollyphile",
     "email": "chthollyphile@users.noreply.github.com"
   },
   "private": true,
-  "version": "0.7.25",
+  "version": "0.8.0",
   "license": "AGPL-3.0",
   "type": "module",
   "main": "electron/main.cjs",
@@ -63,8 +63,8 @@
     "manual:ai-probe": "node test/manual/ai_probe.mjs"
   },
   "build": {
-    "appId": "top.izuna.foliamajor",
-    "productName": "Folia",
+    "appId": "top.ndhnzr6r.folia.customshortcuts",
+    "productName": "Folia可以自定义快捷键版",
     "beforePack": "build/beforePack.cjs",
     "afterPack": "build/afterPack.cjs",
     "electronLanguages": [
@@ -81,8 +81,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "chthollyphile",
-        "repo": "folia-major"
+        "owner": "nDhnzr6r",
+        "repo": "folia-major-version-with-customizable-keyboard-shortcuts"
       }
     ],
     "files": [
@@ -135,8 +135,8 @@
         "to": "trayTemplate@2x.png"
       },
       {
-        "from": "packaging/linux/folia-major.desktop",
-        "to": "linux/folia-major.desktop"
+        "from": "packaging/linux/folia-custom-shortcuts.desktop",
+        "to": "linux/folia-custom-shortcuts.desktop"
       },
       {
         "from": "packaging/linux/README-LINUX.txt",
@@ -186,10 +186,10 @@
         }
       ],
       "icon": "build/icon.png",
-      "artifactName": "${productName}-${version}-${arch}.${ext}"
+      "artifactName": "FoliaCustomShortcuts-${version}-${arch}.${ext}"
     },
     "win": {
-      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "artifactName": "FoliaCustomShortcuts-Setup-${version}.${ext}",
       "target": [
         "nsis"
       ],
@@ -222,7 +222,7 @@
       ]
     },
     "linux": {
-      "artifactName": "${name}-${version}-linux-${arch}.${ext}",
+      "artifactName": "FoliaCustomShortcuts-${version}-linux-${arch}.${ext}",
       "target": [
         "tar.gz",
         "deb",
@@ -234,11 +234,11 @@
       },
       "icon": "build/icon.png",
       "category": "AudioVideo",
-      "executableName": "folia-major",
+      "executableName": "folia-custom-shortcuts",
       "syncDesktopName": true,
       "desktop": {
         "entry": {
-          "StartupWMClass": "folia-major"
+          "StartupWMClass": "folia-custom-shortcuts"
         }
       }
     }
