@@ -1,6 +1,6 @@
 {
   "name": "folia-major-version-with-customizable-keyboard-shortcuts",
-  "productName": "Folia可以自定义快捷键版",
+  "productName": "Folias",
   "desktopName": "folia-custom-shortcuts.desktop",
   "description": "Lyrics Reimagine（Folia 的自定义全局快捷键版本）",
   "author": {
@@ -57,14 +57,12 @@
     "build:windowtolayer": "node packaging/linux/build-windowtolayer.mjs",
     "build:wallpaper-helper": "node packaging/windows/build-wallpaper-helper.mjs",
     "build:ffmpeg": "node packaging/ffmpeg/fetch-ffmpeg.mjs",
-    "contributors:add": "npx all-contributors-cli add",
-    "contributors:generate": "npx all-contributors-cli generate",
     "models:fetch": "node build/fetchModels.mjs",
     "manual:ai-probe": "node test/manual/ai_probe.mjs"
   },
   "build": {
     "appId": "top.ndhnzr6r.folia.customshortcuts",
-    "productName": "Folia可以自定义快捷键版",
+    "productName": "Folias",
     "beforePack": "build/beforePack.cjs",
     "afterPack": "build/afterPack.cjs",
     "electronLanguages": [

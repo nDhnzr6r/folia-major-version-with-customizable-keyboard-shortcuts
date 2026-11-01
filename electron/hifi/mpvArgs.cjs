@@ -18,7 +18,7 @@ const LOADFILE_MODES = new Set(['replace', 'append']);
  * mpv 交给系统音频服务的客户端名：PipeWire 的输出把它写进流节点的 node.name 和 application.name，
  * pipewireProbe.cjs 靠它在 pw-dump 里认出这路流（PulseAudio 输出写进 application.name）。
  */
-const AUDIO_CLIENT_NAME = 'Folia HiFi';
+const AUDIO_CLIENT_NAME = 'Folias HiFi';
 
 // 顺序固定：先关掉一切会碰声音或界面的东西，再是位精确要的那几项。不设 --audio-samplerate / --audio-format，
 // 让 mpv 按源的格式开输出。

@@ -58,7 +58,7 @@ const ObsBrowserSourceApp: React.FC = () => {
         document.body.style.backgroundColor = 'transparent';
         document.documentElement.style.backgroundColor = 'transparent';
         document.body.style.overflow = 'hidden';
-        document.title = 'Folia OBS';
+        document.title = 'Folias OBS';
     }, []);
 
     useEffect(() => {

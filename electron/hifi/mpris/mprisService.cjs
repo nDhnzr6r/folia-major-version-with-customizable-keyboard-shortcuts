@@ -16,7 +16,7 @@ const INTROSPECTABLE_INTERFACE = 'org.freedesktop.DBus.Introspectable';
 const PEER_INTERFACE = 'org.freedesktop.DBus.Peer';
 const BUS_NAME_BASE = 'org.mpris.MediaPlayer2.folia-custom-shortcuts';
 const NO_TRACK_PATH = '/org/mpris/MediaPlayer2/TrackList/NoTrack';
-const IDENTITY = 'Folia';
+const IDENTITY = 'Folias';
 // package.json 的 desktopName 去掉 .desktop。
 const DESKTOP_ENTRY = 'folia-custom-shortcuts';
 const REQUEST_NAME_DO_NOT_QUEUE = 4;
@@ -235,7 +235,7 @@ const createMprisService = ({
 
     const handlePlayerCall = member => {
         if (member === 'Seek' || member === 'SetPosition') return {}; // CanSeek 为假：按规范什么也不做。
-        if (member === 'OpenUri') throw new DbusError('org.freedesktop.DBus.Error.NotSupported', 'Folia does not open URIs');
+        if (member === 'OpenUri') throw new DbusError('org.freedesktop.DBus.Error.NotSupported', 'Folias does not open URIs');
         const command = PLAYER_COMMANDS[member];
         if (!command) throw new DbusError('org.freedesktop.DBus.Error.UnknownMethod', `No method ${member}`);
         if (desired.active) onCommand(command);

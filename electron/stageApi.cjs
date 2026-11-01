@@ -1506,7 +1506,7 @@ function createStageApi({
   const requestStageSongPlay = async (songId, options = {}) => {
     const mainWindow = getMainWindow();
     if (!mainWindow || mainWindow.isDestroyed()) {
-      throw new StageApiError('Folia main window is unavailable for external play requests.', {
+      throw new StageApiError('Folias main window is unavailable for external play requests.', {
         statusCode: 503,
         code: 'STAGE_PLAY_UNAVAILABLE',
       });
@@ -1536,7 +1536,7 @@ function createStageApi({
   const requestStagePlayerRendererAction = async (channel, pendingRequests, requestPrefix, payload, unavailableCode) => {
     const mainWindow = getMainWindow();
     if (!mainWindow || mainWindow.isDestroyed()) {
-      throw new StageApiError('Folia main window is unavailable for Stage player requests.', {
+      throw new StageApiError('Folias main window is unavailable for Stage player requests.', {
         statusCode: 503,
         code: unavailableCode,
       });

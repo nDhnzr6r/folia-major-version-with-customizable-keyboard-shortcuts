@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b5d0e863-48be-497b-b0e9-4bd8d8ce9bf0" alt="Folia" width="100%" />
+  <img src="https://github.com/user-attachments/assets/b5d0e863-48be-497b-b0e9-4bd8d8ce9bf0" alt="Folias" width="100%" />
 </p>
 
 <div align="center">
 
-# Folia可以自定义快捷键版
+# Folia（可以自定义快捷键版）
 
 Lyrics Reimagined // 辞曲新境
 
@@ -20,13 +20,13 @@ Lyrics Reimagined // 辞曲新境
 
 </div>
 
-> 这是 [Folia](https://github.com/chthollyphile/folia-major) 的一个修改版本，遵循 AGPL-3.0。与原版的区别只有一处：全局快捷键的修饰键和按键由用户自己设定，不再固定为 Ctrl+Alt+Shift 加字母或数字。
+> 这是 [Folia](https://github.com/chthollyphile/folia-major) 的一个修改版本，代码来自原作者 chthollyphile 与该项目此前的各位贡献者，遵循 AGPL-3.0。与原版的区别只有一处：全局快捷键的修饰键和按键由用户自己设定，不再固定为 Ctrl+Alt+Shift 加字母或数字。
 >
 > 其他功能、界面与使用方式与原版一致；原版文档仍然适用。遇到问题请在本仓库提 issue，不要提交到原版仓库。
 
 ## 项目简介
 
-Folia是一个以全屏沉浸式歌词播放为核心的在线音乐播放器，支持网易云、酷狗、QQ 音乐、Navidrome 和本地音乐库，桌面端还支持波点音乐、YouTube Music、Spotify 和汽水音乐，通过智能歌词匹配，AI生成配色主题，以及多种全屏歌词动画为用户提供独特的听歌体验。
+Folias 是一个以全屏沉浸式歌词播放为核心的在线音乐播放器，支持网易云、酷狗、QQ 音乐、Navidrome 和本地音乐库，桌面端还支持波点音乐、YouTube Music、Spotify 和汽水音乐，通过智能歌词匹配，AI生成配色主题，以及多种全屏歌词动画为用户提供独特的听歌体验。
 
 提供基于Electron的 windows/ macOS/ Linux 桌面端版本与基于 Node.js 的 Web 版本，支持多平台部署。
 
@@ -35,10 +35,9 @@ Folia是一个以全屏沉浸式歌词播放为核心的在线音乐播放器，
 ## 快速下载
 
 > [!TIP]
-> - **GitHub**：[Latest Release](https://github.com/chthollyphile/folia-major/releases/latest)，提供 Windows / macOS / Linux 全平台安装包。
-> - **网盘**：[夸克网盘](https://pan.quark.cn/s/6e4c6fa3bc6f) · [百度云](https://pan.baidu.com/s/1f0x3g-8PMcNCO-TJ5z1rPw?pwd=flia)（提取码 `flia`），适合国内网络，仅提供 Windows 与 Apple silicon 的正式版安装包。
+> - **GitHub**：[Latest Release](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases/latest)，提供 Windows 安装包。
 >
-> 更多获取方式（Web 部署、Docker、AUR、Flatpak、移动端）见下方 [获取方式](#获取方式)。
+> 更多获取方式（Web 部署、Docker、Flatpak、移动端）见下方 [获取方式](#获取方式)。
 
 ## 展示
 
@@ -140,13 +139,11 @@ Vercel 与 Cloudflare 上的 QQ 音乐不再需要额外部署一个常驻 API �
 
 ### 直接下载
 
-- **Windows / macOS / Linux**: 最新版本的安装包请前往 [Releases 页面](https://github.com/chthollyphile/folia-major/releases/latest) 下载。
-- **Arch Linux**: 可通过 AUR 获取 [folia-major-bin](https://aur.archlinux.org/packages/folia-major-bin)。
-- **Flatpak**: 社区提供的第三方 flatpak，详情见 [Flatpark](https://flatpark.org/apps/top.izuna.foliamajor/)。
+- **Windows**: 最新版本的安装包请前往 [Releases 页面](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases/latest) 下载。
 - **Android**: 社区第三方移植版见下方 [移动端](#移动端)。
 
-> [!IMPORTANT]
-> 如果国内网络从 GitHub Releases 下载较慢，可以使用 [夸克网盘](https://pan.quark.cn/s/6e4c6fa3bc6f) 或 [百度云](https://pan.baidu.com/s/1f0x3g-8PMcNCO-TJ5z1rPw?pwd=flia) 下载。网盘链接仅提供 Windows 与 Apple silicon 的正式版安装包.
+> [!NOTE]
+> 本仓库只构建 Windows 安装包。macOS 与 Linux 包请自行从源码构建，构建方式见 [技术与开发说明](docs/technical.md)。
 
 Linux 包、Wayland / Hyprland 遥控窗和桌面端细节见 [技术与开发说明](docs/technical.md)。
 
@@ -172,7 +169,7 @@ Linux 包、Wayland / Hyprland 遥控窗和桌面端细节见 [技术与开发�
 > [!NOTE]
 > 模组系统是实验性功能，仅桌面版可用，默认关闭，需要在「设置 → 模组 → 模组系统」中开启。
 
-Folium 是 Folia 的模组平台。模组可以添加新的歌词动画模式和背景类型、在播放页上叠加内容、给进度条加按钮和标记、注册命令与设置分区、在歌词显示前改写歌词，也可以通过 Node 入口调用 ffmpeg 等本地能力。模组以可信代码运行，每个模组在启用前都要在原生窗口中确认，文件变化后需要重新确认。
+Folium 是 Folias 的模组平台。模组可以添加新的歌词动画模式和背景类型、在播放页上叠加内容、给进度条加按钮和标记、注册命令与设置分区、在歌词显示前改写歌词，也可以通过 Node 入口调用 ffmpeg 等本地能力。模组以可信代码运行，每个模组在启用前都要在原生窗口中确认，文件变化后需要重新确认。
 
 - **模组市场**：[folium-compound.cielaniska.top](https://folium-compound.cielaniska.top) 提供官方模组和经过审查的社区模组，下载 zip 后拖进模组面板即可安装。
 - **官方认证**：市场里的模组都带有 Folium 签名，安装后显示「官方认证」；只通过安全审查的先行测试模组显示「先行测试」；没有签名的第三方模组显示「未验证」，同样可以使用。
@@ -183,7 +180,7 @@ Folium 是 Folia 的模组平台。模组可以添加新的歌词动画模式和
 
 ## Sync Server
 
-Folia 提供了可选的官方同步服务端 `sync-server`，用于在多个设备之间同步外观设置与 AI 主题库。服务端由用户自行托管，适合希望跨设备同步配色主题的用户。
+Folias 提供了可选的同步服务端 `sync-server`，用于在多个设备之间同步外观设置与 AI 主题库。服务端由用户自行托管，适合希望跨设备同步配色主题的用户。
 
 支持以下部署方式：
 
@@ -192,11 +189,11 @@ Folia 提供了可选的官方同步服务端 `sync-server`，用于在多个设
 - **Docker**：镜像与 Compose 入口见 [Docker 部署目录](deploy/docker/README.md)。
 - **Node.js 自托管**：使用 SQLite，适合本地或不方便使用 Docker 的环境。
 
-详细的环境变量、Token 配置与部署步骤请参阅 [Sync-Server 部署指南](https://folia-site.cielaniska.top/guide/deploy-sync)。部署完成后，在 Folia 的「设置 → 连接与集成」中填写服务端地址和 `SYNC_TOKEN` 即可启用同步。
+详细的环境变量、Token 配置与部署步骤请参阅 [Sync-Server 部署指南](https://folia-site.cielaniska.top/guide/deploy-sync)。部署完成后，在 Folias 的「设置 → 连接与集成」中填写服务端地址和 `SYNC_TOKEN` 即可启用同步。
 
 ## 本地音乐与匹配说明
 
-Folia 会读取音频文件元数据、同目录歌词和封面，并可通过网易云、QQ 音乐或酷狗音乐补全歌曲信息。自动匹配按网易云、QQ、酷狗依次回退；匹配不准确时，可以手动选择候选、恢复首次导入的本地信息，或进一步合并、拆分艺术家与专辑实体。
+Folias 会读取音频文件元数据、同目录歌词和封面，并可通过网易云、QQ 音乐或酷狗音乐补全歌曲信息。自动匹配按网易云、QQ、酷狗依次回退；匹配不准确时，可以手动选择候选、恢复首次导入的本地信息，或进一步合并、拆分艺术家与专辑实体。
 
 完整的导入、重扫、匹配、实体编辑、歌单、缓存和故障排查说明见 [本地音乐库管理](docs/local-library-management.md)。
 
@@ -205,12 +202,6 @@ Folia 会读取音频文件元数据、同目录歌词和封面，并可通过�
 加入discord社群，共同交流，获得帮助
 
 [![Discord](https://img.shields.io/discord/1541051241822687232?logo=discord&logoColor=white&label=Join%20our%20Discord)](https://discord.gg/dMDBTHxeKd)
-
-## 贡献者
-
-感谢所有为本项目进行 Issue 提交、Bug 报告、想法建议、测试与代码编写的贡献者，均依据 all-contributors 规范进行统计
-
-由于列表过长，贡献记录请见 [贡献者名单](CONTRIBUTORS.md)。
 
 ## 法律与免责声明
 

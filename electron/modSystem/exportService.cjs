@@ -44,7 +44,7 @@ const isElectronDevRuntime = () => process.env.ELECTRON_DEV === 'true' || proces
 const createExportService = ({ app, BrowserWindow, resolveFfmpeg, getModClients }) => {
     let activeSession = null;
 
-    const getExportDirectory = () => path.join(app.getPath('videos'), 'Folia Exports');
+    const getExportDirectory = () => path.join(app.getPath('videos'), 'Folias Exports');
 
     /*
      * Builds the render spec from two sources that never mix:

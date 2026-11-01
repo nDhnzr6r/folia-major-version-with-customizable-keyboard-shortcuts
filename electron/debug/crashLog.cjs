@@ -88,7 +88,7 @@ const prune = (dir) => {
 
 /** Everything that is worth knowing before reading the stack. */
 const describeEnvironment = (app) => [
-    `Folia      ${app.getVersion()}`,
+    `Folias     ${app.getVersion()}`,
     `Electron   ${process.versions.electron}`,
     `Chrome     ${process.versions.chrome}`,
     `Node       ${process.versions.node}`,

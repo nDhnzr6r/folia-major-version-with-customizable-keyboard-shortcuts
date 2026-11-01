@@ -46,27 +46,27 @@ const PAGE_QUIET_LIMIT_MS = 3000;
 // so the four shipped locales are mirrored here, as for the trust dialog.
 const SAFE_START_LOCALE = {
     'zh-CN': {
-        startMessage: 'Folia 上次没有启动完。',
+        startMessage: 'Folias 上次没有启动完。',
         startDetail: '可能是某个模组造成的。这次要不要不带模组启动？只管这一次：设置不会变，下次打开 Folia 时模组照常启动。',
         startWithout: '这次不带模组启动',
         startAsUsual: '照常启动',
-        stuckMessage: 'Folia 的窗口没有反应了。',
+        stuckMessage: 'Folias 的窗口没有反应了。',
         stuckDetail: '可能是某个模组卡住了。可以继续等，也可以不带模组重新打开窗口。重新打开只管这一次：设置不会变，下次打开 Folia 时模组照常启动。',
         stuckWait: '继续等',
         stuckReopen: '不带模组重新打开',
     },
     'zh-TW': {
-        startMessage: 'Folia 上次沒有啟動完。',
+        startMessage: 'Folias 上次沒有啟動完。',
         startDetail: '可能是某個模組造成的。這次要不要不帶模組啟動？只管這一次：設定不會變，下次開啟 Folia 時模組照常啟動。',
         startWithout: '這次不帶模組啟動',
         startAsUsual: '照常啟動',
-        stuckMessage: 'Folia 的視窗沒有反應了。',
+        stuckMessage: 'Folias 的視窗沒有反應了。',
         stuckDetail: '可能是某個模組卡住了。可以繼續等，也可以不帶模組重新開啟視窗。重新開啟只管這一次：設定不會變，下次開啟 Folia 時模組照常啟動。',
         stuckWait: '繼續等',
         stuckReopen: '不帶模組重新開啟',
     },
     en: {
-        startMessage: 'Folia did not finish starting last time.',
+        startMessage: 'Folias did not finish starting last time.',
         startDetail: 'A mod may have caused it. Start without mods this time? This is for this time only: no setting changes, and mods start as usual the next time Folia opens.',
         startWithout: 'Start without mods',
         startAsUsual: 'Start as usual',
@@ -76,7 +76,7 @@ const SAFE_START_LOCALE = {
         stuckReopen: 'Reopen without mods',
     },
     in: {
-        startMessage: 'Folia tidak selesai dimulai terakhir kali.',
+        startMessage: 'Folias tidak selesai dimulai terakhir kali.',
         startDetail: 'Mungkin penyebabnya sebuah mod. Mulai tanpa mod kali ini? Hanya untuk kali ini: tidak ada pengaturan yang berubah, dan mod berjalan seperti biasa saat Folia dibuka berikutnya.',
         startWithout: 'Mulai tanpa mod',
         startAsUsual: 'Mulai seperti biasa',
@@ -86,7 +86,7 @@ const SAFE_START_LOCALE = {
         stuckReopen: 'Buka ulang tanpa mod',
     },
     vi: {
-        startMessage: 'Folia không hoàn tất khởi động ở lần mở trước.',
+        startMessage: 'Folias không hoàn tất khởi động ở lần mở trước.',
         startDetail: 'Sự cố có thể do một mod gây ra. Bạn có muốn khởi động không kèm mod lần này không? Lựa chọn này chỉ áp dụng cho lần này: cài đặt không đổi, và các mod sẽ khởi động bình thường vào lần mở Folia tiếp theo.',
         startWithout: 'Khởi động không kèm mod',
         startAsUsual: 'Khởi động như thường lệ',

@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b5d0e863-48be-497b-b0e9-4bd8d8ce9bf0" alt="Folia" width="100%" />
+  <img src="https://github.com/user-attachments/assets/b5d0e863-48be-497b-b0e9-4bd8d8ce9bf0" alt="Folias" width="100%" />
 </p>
 
 <div align="center">
 <a href="https://trendshift.io/repositories/71740?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-71740" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/71740" alt="chthollyphile%2Ffolia-major | Trendshift" width="250" height="55"/></a>
 
-# Folia
+# folia-major-version-with-customizable-keyboard-shortcuts
 
 Lyrics Reimagined // 辞曲新境
 
@@ -17,7 +17,6 @@ Lyrics Reimagined // 辞曲新境
 [![Node.js](https://img.shields.io/badge/node-%3E%3D24-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/chthollyphile/folia-major)
 [![Discord](https://img.shields.io/discord/1541051241822687232?logo=discord&logoColor=white&label=Join%20our%20Discord)](https://discord.gg/dMDBTHxeKd)
-[![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](CONTRIBUTORS.md)
 
 [Get Folia](#get-folia)
 ·
@@ -29,21 +28,24 @@ Lyrics Reimagined // 辞曲新境
 
 </div>
 
+> This is a modified version of [Folia](https://github.com/chthollyphile/folia-major); its code comes from that project's author and the contributors who worked on it before this fork, under AGPL-3.0. The one difference from the original: the modifiers and keys of the global shortcuts are chosen by the user instead of the fixed Ctrl+Alt+Shift plus a letter or digit.
+>
+> Everything else, including the interface and the way it is used, is the same as the original; the original documentation still applies. Please file problems in this repository, not in the original one.
+
 ## About
 
-Folia is an online music player built around full-screen, immersive lyrics. It supports NetEase Cloud Music, Kugou, QQ Music, Navidrome, and local music libraries; the desktop app also supports Bodian Music, YouTube Music, Spotify, and Qishui Music. Smart lyric matching, AI-generated color themes, and a range of full-screen lyric animations make listening feel different.
+Folias is an online music player built around full-screen, immersive lyrics. It supports NetEase Cloud Music, Kugou, QQ Music, Navidrome, and local music libraries; the desktop app also supports Bodian Music, YouTube Music, Spotify, and Qishui Music. Smart lyric matching, AI-generated color themes, and a range of full-screen lyric animations make listening feel different.
 
-Folia ships as an Electron desktop app for Windows, macOS, and Linux, and as a Node.js web app you can deploy to many platforms.
+Folias ships as an Electron desktop app for Windows, macOS, and Linux, and as a Node.js web app you can deploy to many platforms.
 
-To use Folia on a phone or in a browser, [deploy the web app to Vercel in one click](https://folia-site.cielaniska.top/guide/deploy-vercel), or deploy it yourself to any platform that runs Node.js.
+To use Folias on a phone or in a browser, [deploy the web app to Vercel in one click](https://folia-site.cielaniska.top/guide/deploy-vercel), or deploy it yourself to any platform that runs Node.js.
 
 ## Quick download
 
 > [!TIP]
-> - **GitHub**: [Latest Release](https://github.com/chthollyphile/folia-major/releases/latest) has installers for Windows, macOS, and Linux.
-> - **Cloud drives** (faster in mainland China): [Quark](https://pan.quark.cn/s/6e4c6fa3bc6f) · [Baidu](https://pan.baidu.com/s/1f0x3g-8PMcNCO-TJ5z1rPw?pwd=flia) (code `flia`). Stable installers for Windows and Apple silicon only.
+> - **GitHub**: [Latest Release](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases/latest) has the Windows installer.
 >
-> For other options (web deployment, Docker, AUR, Flatpak, mobile), see [Get Folia](#get-folia) below.
+> For other options (web deployment, Docker, mobile), see [Get Folia](#get-folia) below.
 
 ## Showcase
 
@@ -117,7 +119,7 @@ Each lyric animation has its own typography, mood, and tunable parameters, givin
 | Feature | Description |
 | --- | --- |
 | Online search and playback | Search for songs, artists, or albums and play them; covers and lyrics load automatically. |
-| Local music | Import local audio files. Folia stores the index locally and never uploads file contents. See [Local Library Management](docs/local-library-management.md) (Chinese). |
+| Local music | Import local audio files. Folias stores the index locally and never uploads file contents. See [Local Library Management](docs/local-library-management.md) (Chinese). |
 | Smart lyric matching | Local songs are matched to online lyrics and covers automatically; you can correct matches by hand. |
 | Local lyric files | Loads `.lrc`, `.vtt`, `.ttml`, `.qrc`, `.yrc`, and `.krc` files with the same name in the same folder, as well as embedded LRC lyrics. Supports the enhanced word-by-word formats produced by LDDC. |
 | Now Playing integration | Connects to a local [Now Playing](https://github.com/Widdit/now-playing-service/) service to take song, timeline, and lyric data from external players and drive Folia's stage view and full-screen lyrics. |
@@ -135,7 +137,7 @@ To put the web app online quickly, follow the [Vercel deployment guide](https://
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/chthollyphile/folia-major)
 
-Folia also deploys to Cloudflare in one click; adapt the Vercel guide accordingly.
+Folias also deploys to Cloudflare in one click; adapt the Vercel guide accordingly.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chthollyphile/folia-major)
 
@@ -145,13 +147,11 @@ Self-hosters can use the [Docker Compose full-stack deployment](deploy/docker/RE
 
 ### Direct download
 
-- **Windows / macOS / Linux**: Download the latest installers from the [Releases page](https://github.com/chthollyphile/folia-major/releases/latest).
-- **Arch Linux**: Install [folia-major-bin](https://aur.archlinux.org/packages/folia-major-bin) from the AUR.
-- **Flatpak**: A community-maintained third-party Flatpak is available on [Flatpark](https://flatpark.org/apps/top.izuna.foliamajor/).
+- **Windows**: Download the latest installer from the [Releases page](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases/latest).
 - **Android**: Third-party community ports are listed under [Mobile](#mobile) below.
 
-> [!IMPORTANT]
-> If GitHub Releases is slow from mainland China, download from [Quark](https://pan.quark.cn/s/6e4c6fa3bc6f) or [Baidu](https://pan.baidu.com/s/1f0x3g-8PMcNCO-TJ5z1rPw?pwd=flia) instead. These links host stable installers for Windows and Apple silicon only.
+> [!NOTE]
+> This repository only builds the Windows installer. Build macOS and Linux packages from source; see [Technical Notes](docs/technical.md).
 
 For Linux packages, the Wayland / Hyprland remote control window, and other desktop details, see [Technical Notes](docs/technical.md) (Chinese).
 
@@ -179,7 +179,7 @@ Before contributing, read the [Contributing Guide](CONTRIBUTING.en.md).
 > [!NOTE]
 > Mods are experimental, available in the desktop app only, and off by default. Turn them on in **Settings → Mods → Mod system**.
 
-Folium is Folia's mod platform. Mods can add lyric animation modes and background types, overlay content on the player page, add buttons and markers to the progress bar, register commands and settings sections, rewrite lyrics before they are displayed, and use native capabilities such as ffmpeg through a Node entry point. Mods run as trusted code: you confirm each mod in a native window before it is enabled, and confirm again after its files change.
+Folium is Folias' mod platform. Mods can add lyric animation modes and background types, overlay content on the player page, add buttons and markers to the progress bar, register commands and settings sections, rewrite lyrics before they are displayed, and use native capabilities such as ffmpeg through a Node entry point. Mods run as trusted code: you confirm each mod in a native window before it is enabled, and confirm again after its files change.
 
 - **Mod market**: [folium-compound.cielaniska.top](https://folium-compound.cielaniska.top) hosts official mods and reviewed community mods. Download the zip and drag it into the Mods panel to install.
 - **Verification**: Every mod in the market carries a Folium signature and shows as **Verified** after install. Early-access mods that passed only the security review show as **Preview**. Third-party mods without a signature show as **Unverified** and still work.
@@ -190,7 +190,7 @@ Folium is Folia's mod platform. Mods can add lyric animation modes and backgroun
 
 ## Sync Server
 
-Folia offers an optional official sync server, `sync-server`, that syncs appearance settings and the AI theme library across devices. You host it yourself; it suits anyone who wants their color themes on every device.
+Folias offers an optional sync server, `sync-server`, that syncs appearance settings and the AI theme library across devices. You host it yourself; it suits anyone who wants their color themes on every device.
 
 Deployment options:
 
@@ -203,7 +203,7 @@ For environment variables, token setup, and deployment steps, see the [Sync Serv
 
 ## Local music and matching
 
-Folia reads audio metadata plus lyrics and covers from the same folder, and can fill in song details from NetEase Cloud Music, QQ Music, or Kugou. Automatic matching tries NetEase, then QQ, then Kugou. When a match is wrong, you can pick another candidate, restore the local data from the first import, or merge and split artist and album entries.
+Folias reads audio metadata plus lyrics and covers from the same folder, and can fill in song details from NetEase Cloud Music, QQ Music, or Kugou. Automatic matching tries NetEase, then QQ, then Kugou. When a match is wrong, you can pick another candidate, restore the local data from the first import, or merge and split artist and album entries.
 
 For importing, rescanning, matching, entry editing, playlists, caching, and troubleshooting, see [Local Library Management](docs/local-library-management.md) (Chinese).
 
@@ -212,12 +212,6 @@ For importing, rescanning, matching, entry editing, playlists, caching, and trou
 Join the Discord to chat and get help.
 
 [![Discord](https://img.shields.io/discord/1541051241822687232?logo=discord&logoColor=white&label=Join%20our%20Discord)](https://discord.gg/dMDBTHxeKd)
-
-## Contributors
-
-Thanks to everyone who has filed issues, reported bugs, suggested ideas, tested, or written code. Contributions are tracked under the all-contributors specification.
-
-The list is long, so see [Contributors](CONTRIBUTORS.md).
 
 ## Legal and disclaimer
 
@@ -240,8 +234,8 @@ Special thanks to these projects and resources:
 - [paper-design/shaders](https://github.com/paper-design/shaders)
 - [yakult-green-tea/qq-music-api](https://github.com/yakult-green-tea/qq-music-api)
 
-Folia uses the [Apple Music-like Lyrics TTML word-by-word lyrics database](https://github.com/amll-dev/amll-ttml-db) for high-quality lyric files. Thanks to its authors and contributors.
+Folias uses the [Apple Music-like Lyrics TTML word-by-word lyrics database](https://github.com/amll-dev/amll-ttml-db) for high-quality lyric files. Thanks to its authors and contributors.
 
 ## License
 
-Folia is open source under the `AGPL-3.0` license.
+Folias is open source under the `AGPL-3.0` license.
