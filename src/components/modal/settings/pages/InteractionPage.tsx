@@ -34,7 +34,7 @@ const O = {
 export const OPTIONS: SettingsOptionDef[] = [...Object.values(O), ...GLOBAL_SHORTCUTS_OPTIONS];
 
 const REFUSAL_KEYS: Record<CustomShortcutRefusal, string> = {
-    'needs-modifier': 'options.globalShortcutNeedsModifier',
+    'needs-modifier': 'options.customShortcutNeedsModifier',
     'unsupported-key': 'options.globalShortcutUnsupportedKey',
     reserved: 'options.customShortcutTaken',
     duplicate: 'options.customShortcutDuplicate',

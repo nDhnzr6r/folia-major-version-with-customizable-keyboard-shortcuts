@@ -1,5 +1,10 @@
 import { CUSTOM_SHORTCUT_SLOTS, type CustomShortcutBinding } from '../../stores/useInteractionSettingsStore';
-import { isGlobalShortcutKey, toGlobalShortcutAccelerator } from './globalShortcuts/globalShortcutRules';
+import {
+    isGlobalShortcutKey,
+    readGlobalShortcutKey,
+    readGlobalShortcutModifiers,
+    toGlobalShortcutAccelerator,
+} from './globalShortcuts/globalShortcutRules';
 import type { CommandPaletteCommand } from './types';
 
 // src/components/command-palette/customShortcut.ts
@@ -25,12 +30,27 @@ const hotkeyAccelerator = (hotkey: { key: string; alt?: boolean; ctrl?: boolean 
     ],
 );
 
+/** 一次按键的加速器名（`Alt+J`），和绑定的比较用同一种写法。 */
+export const shortcutAccelerator = (
+    event: Pick<KeyboardEvent, 'key' | 'code' | 'ctrlKey' | 'altKey' | 'shiftKey' | 'metaKey'>,
+): string => toGlobalShortcutAccelerator(readGlobalShortcutKey(event), readGlobalShortcutModifiers(event));
+
+/** 应用自己的按键：切歌和开发者面板仍占着这些组合，绑上去会一次按键做两件事。 */
+const HOST_STROKES: ReadonlyArray<string> = [
+    'Control+Left',
+    'Control+Right',
+    'Super+Left',
+    'Super+Right',
+    'Alt+Shift+D',
+    'Alt+Shift+M',
+];
+
 /**
  * Every combination that already opens something. Computed rather than listed, so a hotkey added to
  * the registry tomorrow is reserved the same day — which is the whole point of checking at all.
  */
 export const collectReservedShortcutStrokes = (commands: CommandPaletteCommand[]): Set<string> => {
-    const strokes = new Set<string>(BUILT_IN_HOTKEYS.map(hotkeyAccelerator));
+    const strokes = new Set<string>([...BUILT_IN_HOTKEYS.map(hotkeyAccelerator), ...HOST_STROKES]);
     for (const command of commands) {
         if (command.openHotkey) {
             strokes.add(hotkeyAccelerator(command.openHotkey));
@@ -38,6 +58,11 @@ export const collectReservedShortcutStrokes = (commands: CommandPaletteCommand[]
     }
     return strokes;
 };
+
+/** 只按 Shift 不算：它会和输入大写字母、播放页的单键快捷键撞上。 */
+const hasCommandModifier = (modifiers: ReadonlyArray<CustomShortcutBinding['modifiers'][number]>): boolean => (
+    modifiers.some(modifier => modifier !== 'shift')
+);
 
 /**
  * Whether this command works wherever the palette happens to be.
@@ -61,14 +86,14 @@ export const refuseCustomShortcutChord = (
     if (!isGlobalShortcutKey(key)) {
         return 'unsupported-key';
     }
-    if (modifiers.length === 0) {
+    if (modifiers.length === 0 || !hasCommandModifier(modifiers)) {
         return 'needs-modifier';
     }
     const accelerator = toGlobalShortcutAccelerator(key, modifiers);
     if (collectReservedShortcutStrokes(commands).has(accelerator)) {
         return 'reserved';
     }
-    const taken = bindings.some((binding, index) => index !== slot && binding.key
+    const taken = bindings.some((binding, index) => index !== slot && binding.key && binding.commandId
         && toGlobalShortcutAccelerator(binding.key, binding.modifiers) === accelerator);
     return taken ? 'duplicate' : null;
 };
@@ -93,7 +118,7 @@ export const resolveActiveCustomShortcuts = (
     const seen = new Set<string>();
     bindings.slice(0, CUSTOM_SHORTCUT_SLOTS).forEach((binding, slot) => {
         const { key, commandId } = binding;
-        if (!key || !commandId || !isGlobalShortcutKey(key) || binding.modifiers.length === 0) {
+        if (!key || !commandId || !isGlobalShortcutKey(key) || !hasCommandModifier(binding.modifiers)) {
             return;
         }
         const accelerator = toGlobalShortcutAccelerator(key, binding.modifiers);

@@ -12,8 +12,7 @@ import { isPrimaryModifierPressed, isSecondaryModifierPressed } from '../../util
 import { useSettingsModalStore } from '../../stores/useSettingsModalStore';
 import { useAppViewStore } from '../../stores/useAppViewStore';
 import { useInteractionSettingsStore } from '../../stores/useInteractionSettingsStore';
-import { commandForCustomShortcut, resolveActiveCustomShortcuts } from './customShortcut';
-import { readGlobalShortcutChord } from './globalShortcuts/globalShortcutRules';
+import { commandForCustomShortcut, resolveActiveCustomShortcuts, shortcutAccelerator } from './customShortcut';
 import { useGlobalShortcuts } from './globalShortcuts/useGlobalShortcuts';
 import { runGlobalShortcutCommand } from './globalShortcuts/runGlobalShortcutCommand';
 
@@ -499,8 +498,6 @@ export const useCommandPalette = ({
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            // 上一次空格的按下如果没等到松开（比如窗口失焦），这次按下就从头算，别让旧值挡住松开补录。
-            customShortcutFiredOnKeyDown.current = null;
             // A dialog is drawn over the palette and has the keyboard: under it no key opens the
             // palette or runs a command.
             if (hasOpenSheet()) {
@@ -514,21 +511,27 @@ export const useCommandPalette = ({
 
             // The listener's own shortcuts. First, like the other modifier entries, and resolved
             // through the same function the settings picker uses — a binding the picker would
-            // refuse cannot fire from a value left in storage.
-            const customAccelerator = readGlobalShortcutChord(event);
-            const customCommand = commandForCustomShortcut(customShortcuts, customAccelerator);
-            if (customCommand && isCommandPaletteCommandEnabled(customCommand, context)) {
-                if (isBlocked) {
+            // refuse cannot fire from a value left in storage. Repeats are not new presses, and a
+            // Shift-only combination must not swallow a capital letter typed into a field.
+            const shiftOnly = event.shiftKey && !event.ctrlKey && !event.altKey && !event.metaKey;
+            if (!event.repeat && !(shiftOnly && isTextEntryTarget(event.target))) {
+                const customAccelerator = shortcutAccelerator(event);
+                const customCommand = commandForCustomShortcut(customShortcuts, customAccelerator);
+                if (customCommand && isCommandPaletteCommandEnabled(customCommand, context)) {
+                    if (isBlocked) {
+                        return;
+                    }
+
+                    // 空格按住 Alt 时按下到不了这里；真到了就记下来，让松开那一步别重复执行。
+                    if (event.key === ' ') {
+                        customShortcutFiredOnKeyDown.current = customAccelerator;
+                    }
+                    event.preventDefault();
+                    // 应用自己的按键（空格播放、Ctrl+方向键切歌等）不要再执行一遍。
+                    event.stopImmediatePropagation();
+                    invokeCommand(customCommand);
                     return;
                 }
-
-                // 空格按住 Alt 时按下到不了这里；真到了就记下来，让松开那一步别重复执行。
-                if (event.key === ' ') {
-                    customShortcutFiredOnKeyDown.current = customAccelerator;
-                }
-                event.preventDefault();
-                invokeCommand(customCommand);
-                return;
             }
 
             // Works everywhere, because it carries a modifier.
@@ -655,16 +658,18 @@ export const useCommandPalette = ({
             if (event.key !== ' ' || !event.altKey || hasOpenSheet()) {
                 return;
             }
-            const accelerator = readGlobalShortcutChord(event);
+            const accelerator = shortcutAccelerator(event);
             if (customShortcutFiredOnKeyDown.current === accelerator) {
                 customShortcutFiredOnKeyDown.current = null;
                 return;
             }
+            customShortcutFiredOnKeyDown.current = null;
             const command = commandForCustomShortcut(customShortcuts, accelerator);
             if (!command || !isCommandPaletteCommandEnabled(command, context) || isBlocked) {
                 return;
             }
             event.preventDefault();
+            event.stopImmediatePropagation();
             invokeCommand(command);
         };
         window.addEventListener('keyup', handleKeyUp);

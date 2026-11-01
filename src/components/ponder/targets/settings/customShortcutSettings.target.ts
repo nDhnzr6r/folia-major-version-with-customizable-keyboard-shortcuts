@@ -20,7 +20,7 @@ const anchors = {
     rejection: settingsRegion(G.rejection, 'ponder.anchors.customShortcut.rejection'),
 } satisfies Record<string, PonderAnchorSource>;
 
-/** 第一章：Alt 是印死的，录的只有那一颗字母；被占掉的字母会被当场退回。 */
+/** 第一章：组合键整段录进去；被占掉的组合会被当场退回。 */
 const theKey: PonderSceneScript = {
     id: 'custom-shortcut-key',
     titleKey: 'ponder.scenes.customShortcutKey',
@@ -42,7 +42,7 @@ const theKey: PonderSceneScript = {
         { kind: 'highlight', id: 'dimAlt', anchor: 'capAlt', intensity: [0.9, 0], durationMs: 400, keyframe: true },
         { kind: 'cursor', id: 'focusSlot', to: { anchor: 'capKey' }, press: 'tap', durationMs: 620, withPrevious: true },
         { kind: 'highlight', id: 'markKey', anchor: 'capKey', intensity: [0, 0.9], durationMs: 420, withPrevious: true },
-        { kind: 'keypress', id: 'pressLetter', keys: ['J'], at: { anchor: 'capKey', y: 0 }, durationMs: 900 },
+        { kind: 'keypress', id: 'pressLetter', keys: ['Ctrl', 'J'], at: { anchor: 'capKey', y: 0 }, durationMs: 900 },
         {
             kind: 'caption', id: 'capture',
             textKey: 'ponder.captions.customShortcut.capture',

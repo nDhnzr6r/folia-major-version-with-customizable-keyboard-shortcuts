@@ -68,7 +68,7 @@ test('refuses a press without a modifier, and says why', async ({ page }) => {
     await keyField(page).click();
     await page.keyboard.press('j');
 
-    await expect(page.getByText('Hold at least one modifier with the key')).toBeVisible();
+    await expect(page.getByText('Hold Ctrl, Alt, or Win with the key')).toBeVisible();
     // 还在等：拒绝一个组合不该把录制模式也一起关掉。
     await expect(keyField(page)).toHaveText('Press a key…');
 
@@ -82,7 +82,7 @@ test('does not let the captured press reach the app', async ({ page }) => {
 
     // S 是播放页打开命令面板的键。录制期间它必须只算这次录入，而不是同时把面板拉开。
     await page.keyboard.press('s');
-    await expect(page.getByText('Hold at least one modifier with the key')).toBeVisible();
+    await expect(page.getByText('Hold Ctrl, Alt, or Win with the key')).toBeVisible();
 
     // Ctrl+K 本来也开面板；这里同样只该被拒绝，不该漏出去。
     await page.keyboard.press('Control+k');

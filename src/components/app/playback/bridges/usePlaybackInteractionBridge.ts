@@ -273,6 +273,8 @@ export function usePlaybackInteractionBridge({
                     break;
                 }
                 case 'Space':
+                    // 带修饰键的空格留给快捷键：应用内的自定义快捷键和全局快捷键都可能用它。
+                    if (event.ctrlKey || event.altKey || event.metaKey) break;
                     // On the HiFi route `audioSrc` is null: mpv has the song.
                     if (currentSong && (audioSrc || isHifiRoute() || isNowPlayingStageActive || (activePlaybackContext === 'stage' && stageActiveEntryKind === 'lyrics'))) {
                         event.preventDefault();

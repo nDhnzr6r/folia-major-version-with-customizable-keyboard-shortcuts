@@ -6,6 +6,7 @@ import {
     isScopeIndependentCommand,
     refuseCustomShortcutChord,
     resolveActiveCustomShortcuts,
+    shortcutAccelerator,
 } from '../../../src/components/command-palette/customShortcut';
 import type { CommandPaletteCommand } from '../../../src/components/command-palette/types';
 import type { ShortcutBinding } from '../../../src/stores/useInteractionSettingsStore';
@@ -37,6 +38,9 @@ describe('reserved strokes', () => {
         const strokes = collectReservedShortcutStrokes(COMMAND_PALETTE_COMMANDS);
         expect(strokes.has('S')).toBe(true);
         expect(strokes.has('Control+K')).toBe(true);
+        // 应用自己占着的组合：切歌与开发者面板。
+        expect(strokes.has('Control+Left')).toBe(true);
+        expect(strokes.has('Alt+Shift+D')).toBe(true);
     });
 
     it('is computed from the registry, so a new hotkey reserves itself', () => {
@@ -78,8 +82,9 @@ describe('refusing a combination', () => {
         expect(refuseCustomShortcutChord('f4', ['control'], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBeNull();
     });
 
-    it('needs a modifier and a key on the list', () => {
+    it('needs Ctrl, Alt or Win, and a key on the list', () => {
         expect(refuseCustomShortcutChord('j', [], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBe('needs-modifier');
+        expect(refuseCustomShortcutChord('j', ['shift'], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBe('needs-modifier');
         expect(refuseCustomShortcutChord('escape', ['alt'], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBe('unsupported-key');
     });
 
@@ -90,7 +95,7 @@ describe('refusing a combination', () => {
 
     it('refuses a combination another slot holds, but only with the same modifiers', () => {
         expect(refuseCustomShortcutChord('j', ['alt'], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBe('duplicate');
-        expect(refuseCustomShortcutChord('j', ['shift'], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBeNull();
+        expect(refuseCustomShortcutChord('j', ['control'], 1, bindings, COMMAND_PALETTE_COMMANDS)).toBeNull();
         expect(refuseCustomShortcutChord('j', ['alt'], 0, bindings, COMMAND_PALETTE_COMMANDS)).toBeNull();
     });
 });
@@ -109,9 +114,10 @@ describe('resolving stored bindings', () => {
         expect(active.map(entry => entry.accelerator)).toEqual(['Alt+J', 'Control+Shift+K']);
     });
 
-    it('runs nothing when either half is missing', () => {
+    it('runs nothing when either half is missing, or for Shift alone', () => {
         expect(resolveActiveCustomShortcuts([binding({ key: 'j' })], commands)).toEqual([]);
         expect(resolveActiveCustomShortcuts([binding({ commandId: 'global-one' })], commands)).toEqual([]);
+        expect(resolveActiveCustomShortcuts([binding({ key: 'j', modifiers: ['shift'], commandId: 'global-one' })], commands)).toEqual([]);
     });
 
     it('goes quiet once the combination is claimed by something else', () => {
@@ -140,5 +146,13 @@ describe('resolving stored bindings', () => {
         );
         expect(commandForCustomShortcut(active, 'Alt+Shift+Space')?.id).toBe('global-one');
         expect(commandForCustomShortcut(active, 'Alt+Space')).toBeNull();
+    });
+
+    it('builds the pressed accelerator in the same form the bindings use', () => {
+        // 回归：派发以前拿 readGlobalShortcutChord 的小写 id（alt+j）去比加速器名（Alt+J），永远不相等。
+        const event = { key: 'J', code: 'KeyJ', ctrlKey: false, altKey: true, shiftKey: false, metaKey: false };
+        expect(shortcutAccelerator(event)).toBe('Alt+J');
+        const active = resolveActiveCustomShortcuts([binding({ key: 'j', commandId: 'global-one' })], commands);
+        expect(commandForCustomShortcut(active, shortcutAccelerator(event))?.id).toBe('global-one');
     });
 });
