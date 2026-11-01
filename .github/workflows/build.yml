@@ -38,6 +38,10 @@ jobs:
       - name: 安装依赖
         run: npm ci
 
+      # MNN 源码里有超过 260 字符的目录，Windows 运行器默认会 checkout 失败。
+      - name: 允许 Git 长路径
+        run: git config --global core.longpaths true
+
       - name: 安装 Rust
         uses: dtolnay/rust-toolchain@master
         with:
