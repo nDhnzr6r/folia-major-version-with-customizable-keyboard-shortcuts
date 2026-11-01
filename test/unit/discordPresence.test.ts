@@ -50,7 +50,7 @@ describe('discordPresence', () => {
     });
 
     expect(activity).toMatchObject({
-      name: 'Folia',
+      name: 'Folias',
       type: 2,
       details: 'Song',
       state: 'Artist',

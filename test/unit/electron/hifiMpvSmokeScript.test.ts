@@ -28,7 +28,7 @@ const PACTL_OUTPUT = [
     '\tDriver: PipeWire',
     '\tProperties:',
     `\t\tapplication.name = "${AUDIO_CLIENT_NAME}"`,
-    '\t\tnode.name = "Folia HiFi"',
+    '\t\tnode.name = "Folias HiFi"',
     '',
     'Sink Input #102',
     '\tDriver: PipeWire',
@@ -40,7 +40,7 @@ const PACTL_OUTPUT = [
 
 describe('hifiMpvSmoke.mjs: finding mpv\'s stream in pactl', () => {
     it('takes AUDIO_CLIENT_NAME from mpvArgs.cjs', () => {
-        expect(AUDIO_CLIENT_NAME).toBe('Folia HiFi');
+        expect(AUDIO_CLIENT_NAME).toBe('Folias HiFi');
         expect(smoke).toContain('const { AUDIO_CLIENT_NAME } = require(\'../../electron/hifi/mpvArgs.cjs\');');
         expect(sinkInputsBody).not.toBe('');
     });

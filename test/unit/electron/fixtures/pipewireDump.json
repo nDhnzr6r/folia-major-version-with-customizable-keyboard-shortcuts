@@ -645,13 +645,13 @@
             "state": "running",
             "error": null,
             "props": {
-                "application.id": "Folia HiFi",
-                "application.name": "Folia HiFi",
+                "application.id": "Folias HiFi",
+                "application.name": "Folias HiFi",
                 "client.id": 124,
                 "media.class": "Stream/Output/Audio",
                 "media.name": "silent96.flac - mpv",
-                "node.description": "Folia HiFi",
-                "node.name": "Folia HiFi",
+                "node.description": "Folias HiFi",
+                "node.name": "Folias HiFi",
                 "node.rate": "1/96000",
                 "object.id": 126,
                 "object.serial": 6395

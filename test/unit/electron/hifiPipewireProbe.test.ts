@@ -90,7 +90,7 @@ const withoutLinksFrom = (dump: PwObject[], from: number) => dump.filter(object 
 
 describe('buildOutputProbe on a real pw-dump', () => {
     it('follows mpv\'s 96 kHz stream through the eq6 and remap filter chains to the 48 kHz speaker, as PipeWire reports it', () => {
-        expect(buildOutputProbe(loadDump(), { streamName: 'Folia HiFi', ownPids: [1], now: 1234 })).toEqual({
+        expect(buildOutputProbe(loadDump(), { streamName: 'Folias HiFi', ownPids: [1], now: 1234 })).toEqual({
             backend: 'pipewire',
             at: 1234,
             stream: {
@@ -142,8 +142,8 @@ describe('buildOutputProbe on a real pw-dump', () => {
 
     it('only an output stream counts as mpv\'s, not a sink or capture node of the same name', () => {
         const dump = [
-            node({ 'media.class': 'Audio/Sink', 'node.name': 'Folia HiFi', 'device.id': 1 }),
-            node({ 'media.class': 'Stream/Input/Audio', 'node.name': 'Folia HiFi' }),
+            node({ 'media.class': 'Audio/Sink', 'node.name': 'Folias HiFi', 'device.id': 1 }),
+            node({ 'media.class': 'Stream/Input/Audio', 'node.name': 'Folias HiFi' }),
         ];
         expect(buildOutputProbe(dump)).toBeNull();
     });
@@ -153,21 +153,21 @@ describe('buildOutputProbe: finding mpv\'s stream', () => {
     const device = () => node({ 'media.class': 'Audio/Sink', 'node.name': 'dac', 'device.id': 9, 'device.api': 'alsa' }, { id: 10 });
 
     it('matches application.name too (mpv\'s PulseAudio output names the client, not the node)', () => {
-        const stream = streamNode({ 'node.name': 'mpv', 'application.name': 'Folia HiFi' }, { id: 20 });
+        const stream = streamNode({ 'node.name': 'mpv', 'application.name': 'Folias HiFi' }, { id: 20 });
         expect(buildOutputProbe([device(), stream, link(20, 10)])?.stream.nodeId).toBe(20);
     });
 
     it('prefers the running stream, then the newest one', () => {
-        const idle = streamNode({ 'node.name': 'Folia HiFi' }, { id: 30, state: 'idle' });
-        const running = streamNode({ 'node.name': 'Folia HiFi' }, { id: 21 });
-        const older = streamNode({ 'node.name': 'Folia HiFi' }, { id: 20 });
+        const idle = streamNode({ 'node.name': 'Folias HiFi' }, { id: 30, state: 'idle' });
+        const running = streamNode({ 'node.name': 'Folias HiFi' }, { id: 21 });
+        const older = streamNode({ 'node.name': 'Folias HiFi' }, { id: 20 });
         expect(buildOutputProbe([device(), idle, running, older])?.stream).toMatchObject({ nodeId: 21, state: 'running' });
-        const paused = streamNode({ 'node.name': 'Folia HiFi' }, { id: 31, state: 'idle' });
+        const paused = streamNode({ 'node.name': 'Folias HiFi' }, { id: 31, state: 'idle' });
         expect(buildOutputProbe([device(), idle, paused])?.stream).toMatchObject({ nodeId: 31, state: 'idle' });
     });
 
     it('a stream PipeWire has not linked anywhere yet has no filters and no device', () => {
-        const probe = buildOutputProbe([device(), streamNode({ 'node.name': 'Folia HiFi' }, { id: 20 })]);
+        const probe = buildOutputProbe([device(), streamNode({ 'node.name': 'Folias HiFi' }, { id: 20 })]);
         expect(probe).toMatchObject({ filters: [], device: null, otherStreams: [] });
     });
 });
@@ -209,7 +209,7 @@ describe('buildOutputProbe: walking to the device', () => {
     });
 
     it('a sink without device.id, link-group or api.* is a virtual device: recorded as the last filter, no device, even with node.driver', () => {
-        const stream = streamNode({ 'node.name': 'Folia HiFi' }, { id: 20 });
+        const stream = streamNode({ 'node.name': 'Folias HiFi' }, { id: 20 });
         const loose = node({ 'media.class': 'Audio/Sink', 'node.name': 'loose', 'node.virtual': true }, { id: 40 });
         expect(buildOutputProbe([stream, loose, link(20, 40)])).toMatchObject({
             filters: [{ nodeId: 40, name: 'loose', description: null }],
@@ -227,7 +227,7 @@ describe('buildOutputProbe: walking to the device', () => {
     });
 
     it('a sink whose factory.name is api.* is a device without device.id', () => {
-        const stream = streamNode({ 'node.name': 'Folia HiFi' }, { id: 20 });
+        const stream = streamNode({ 'node.name': 'Folias HiFi' }, { id: 20 });
         const sink = node({ 'media.class': 'Audio/Sink', 'node.name': 'manual-alsa', 'factory.name': 'api.alsa.pcm.sink' }, { id: 21 });
         expect(buildOutputProbe([stream, sink, link(20, 21)])).toMatchObject({ filters: [], device: { nodeId: 21, api: 'alsa' } });
     });
@@ -268,7 +268,7 @@ describe('buildOutputProbe: walking to the device', () => {
         expect(buildOutputProbe(looped)).toMatchObject({ filters: [{ nodeId: 38 }, { nodeId: 40 }], device: null });
 
         const chain = (length: number) => {
-            const objects: PwObject[] = [streamNode({ 'node.name': 'Folia HiFi' }, { id: 1000 })];
+            const objects: PwObject[] = [streamNode({ 'node.name': 'Folias HiFi' }, { id: 1000 })];
             let previous = 1000;
             for (let index = 0; index < length; index += 1) {
                 const input = 1001 + index * 2;
@@ -329,7 +329,7 @@ describe('buildOutputProbe: what each node reports', () => {
     });
 
     it('a sink with api.* properties but no device.id still counts as the device', () => {
-        const stream = streamNode({ 'node.name': 'Folia HiFi' }, { id: 20 });
+        const stream = streamNode({ 'node.name': 'Folias HiFi' }, { id: 20 });
         const sink = node({ 'media.class': 'Audio/Sink', 'node.name': 'jack-ish', 'api.jack.client': 'x' }, { id: 21 });
         expect(buildOutputProbe([stream, sink, link(20, 21)])?.device).toMatchObject({ nodeId: 21, api: 'jack' });
         // PipeWire 也有标成 Audio/Duplex 的设备节点（同一个节点既收又发），一样算设备；声卡的输入节点不算。
@@ -512,7 +512,7 @@ describe('createPipewireProbe', () => {
             streamNode({ 'node.name': 'other mpv', 'client.id': 600 }, { id: 601 }),
             link(601, 70),
         ]);
-        const pending = reader.probe({ streamName: 'Folia HiFi' });
+        const pending = reader.probe({ streamName: 'Folias HiFi' });
         exec.succeed(0, JSON.stringify(dump));
         await expect(pending).resolves.toMatchObject({ otherStreams: [{ nodeId: 601, own: true }] });
         expect(getOwnPids).toHaveBeenCalledTimes(1);
@@ -656,6 +656,6 @@ describe('createPipewireProbe', () => {
         expect(logInfo).toHaveBeenCalledTimes(2);
         expect(String(logInfo.mock.calls[1][0])).toContain(`${DEVICE_NAME} 96000 Hz`);
         await read(JSON.stringify(loadDump().filter(object => object.id !== 126)));
-        expect(logInfo).toHaveBeenLastCalledWith('[HiFi] PipeWire reports: no PipeWire stream named "Folia HiFi"');
+        expect(logInfo).toHaveBeenLastCalledWith('[HiFi] PipeWire reports: no PipeWire stream named "Folias HiFi"');
     });
 });

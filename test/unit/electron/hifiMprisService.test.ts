@@ -238,7 +238,7 @@ describe('createMprisService', () => {
             CanQuit: false,
             CanRaise: true,
             HasTrackList: false,
-            Identity: 'Folia',
+            Identity: 'Folias',
             DesktopEntry: 'folia-custom-shortcuts',
             SupportedUriSchemes: [],
             SupportedMimeTypes: [],

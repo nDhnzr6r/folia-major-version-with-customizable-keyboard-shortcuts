@@ -270,7 +270,7 @@ describe('a note left over from the last start', () => {
         create().start();
         expect(dialogs.asked).toHaveLength(1);
         expect(dialogs.asked[0]).toMatchObject({
-            message: 'Folia did not finish starting last time.',
+            message: 'Folias did not finish starting last time.',
             buttons: ['Start without mods', 'Start as usual'],
             defaultId: 0,
             cancelId: 0,

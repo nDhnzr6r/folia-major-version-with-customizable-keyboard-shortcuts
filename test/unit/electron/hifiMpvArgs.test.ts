@@ -47,7 +47,7 @@ const BASE_ARGS = [
     '--volume=100',
     '--volume-max=100',
     '--audio-fallback-to-null=no',
-    '--audio-client-name=Folia HiFi',
+    '--audio-client-name=Folias HiFi',
 ];
 
 describe('buildMpvArgs', () => {
@@ -89,12 +89,12 @@ describe('buildMpvArgs', () => {
         expect(args).not.toContain('--audio-exclusive=yes');
     });
 
-    it('names mpv\'s client "Folia HiFi" on every platform, as one argument (the probe finds the PipeWire stream by it)', () => {
-        expect(AUDIO_CLIENT_NAME).toBe('Folia HiFi');
+    it('names mpv\'s client "Folias HiFi" on every platform, as one argument (the probe finds the PipeWire stream by it)', () => {
+        expect(AUDIO_CLIENT_NAME).toBe('Folias HiFi');
         for (const platform of ['linux', 'darwin', 'win32']) {
             const ipc = platform === 'win32' ? { kind: 'pipe', path: buildPipeName('ab') } : { kind: 'fd' };
             const args = buildMpvArgs({ platform, ipc, exclusive: false, dsdMode: 'pcm' });
-            expect(args.filter(arg => arg.startsWith('--audio-client-name')), platform).toEqual(['--audio-client-name=Folia HiFi']);
+            expect(args.filter(arg => arg.startsWith('--audio-client-name')), platform).toEqual(['--audio-client-name=Folias HiFi']);
         }
     });
 
