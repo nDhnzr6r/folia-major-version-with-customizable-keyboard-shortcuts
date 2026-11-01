@@ -56,14 +56,14 @@ describe('normalizeBuildCommit', () => {
 });
 
 describe('resolveBuildKind', () => {
-    const upstreamCi = { GITHUB_ACTIONS: 'true', GITHUB_REPOSITORY: 'chthollyphile/folia-major' };
+    const ci = { GITHUB_ACTIONS: 'true', GITHUB_REPOSITORY: 'nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts' };
 
-    it('only treats GitHub Actions runs of the upstream repository as official', () => {
-        expect(resolveBuildKind(upstreamCi)).toEqual({ kind: 'official', host: null });
+    it('only treats GitHub Actions runs of this repository as official', () => {
+        expect(resolveBuildKind(ci)).toEqual({ kind: 'official', host: null });
     });
 
     it('treats the documented deployments as self-hosted, including official Docker images', () => {
-        expect(resolveBuildKind({ ...upstreamCi, APP_RELEASE_CHANNEL: 'docker' })).toEqual({ kind: 'self-hosted', host: 'docker' });
+        expect(resolveBuildKind({ ...ci, APP_RELEASE_CHANNEL: 'docker' })).toEqual({ kind: 'self-hosted', host: 'docker' });
         expect(resolveBuildKind({ APP_RELEASE_CHANNEL: 'docker' })).toEqual({ kind: 'self-hosted', host: 'docker' });
         expect(resolveBuildKind({ VERCEL: '1', VERCEL_GIT_REPO_OWNER: 'someone', VERCEL_GIT_REPO_SLUG: 'folia-major' })).toEqual({ kind: 'self-hosted', host: 'vercel' });
         expect(resolveBuildKind({ CF_PAGES: '1' })).toEqual({ kind: 'self-hosted', host: 'cloudflare' });
