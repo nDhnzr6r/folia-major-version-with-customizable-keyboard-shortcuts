@@ -184,10 +184,10 @@
         }
       ],
       "icon": "build/icon.png",
-      "artifactName": "FoliaCustomShortcuts-${version}-${arch}.${ext}"
+      "artifactName": "Folias-${version}-${arch}.${ext}"
     },
     "win": {
-      "artifactName": "FoliaCustomShortcuts-Setup-${version}.${ext}",
+      "artifactName": "Folias-Setup-${version}.${ext}",
       "target": [
         "nsis"
       ],
@@ -220,7 +220,7 @@
       ]
     },
     "linux": {
-      "artifactName": "FoliaCustomShortcuts-${version}-linux-${arch}.${ext}",
+      "artifactName": "Folias-${version}-linux-${arch}.${ext}",
       "target": [
         "tar.gz",
         "deb",

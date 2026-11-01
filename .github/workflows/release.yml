@@ -1,7 +1,7 @@
 name: Release
 
-# 打 tag（v*）才发布：构建 Windows 安装包，传到本仓库 Releases，并生成 latest.yml 供自动更新。
-# 手动触发只出安装包、不发布，产物放在 Actions 的 artifact 里。
+# 打 tag（v*）发布：Windows、macOS、Linux 一起打包，产物发到本仓库 Releases。
+# 手动触发只打包、不发布，产物留在 Actions 的 artifact 里。
 on:
   push:
     tags:
@@ -16,9 +16,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  windows:
-    name: 构建 Windows 安装包
-    runs-on: windows-latest
+  build:
+    name: 打包 ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+          - ubuntu-24.04-arm
     env:
       CSC_IDENTITY_AUTO_DISCOVERY: 'false'
     steps:
@@ -36,18 +44,36 @@ jobs:
 
       # MNN 源码里有超过 260 字符的目录，Windows 运行器默认会 checkout 失败。
       - name: 允许 Git 长路径
+        if: runner.os == 'Windows'
         run: git config --global core.longpaths true
 
       - name: 安装 Rust
+        if: runner.os == 'Linux' || runner.os == 'Windows'
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
 
+      - name: 缓存 windowtolayer 的编译结果
+        if: runner.os == 'Linux'
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: .windowtolayer-src
+
       - name: 缓存壁纸助手的编译结果
+        if: runner.os == 'Windows'
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: packaging/windows/wallpaper-helper
 
+      - name: 编译壁纸助手（Windows）
+        if: runner.os == 'Windows'
+        run: node packaging/windows/build-wallpaper-helper.mjs
+
+      - name: 编译 windowtolayer（Linux）
+        if: runner.os == 'Linux'
+        run: node packaging/linux/build-windowtolayer.mjs
+
+      # 打包前 beforePack 会下载 ffmpeg、编译 MNN、下载模型，这几份缓存跨次构建复用。
       - name: 缓存 ffmpeg、MNN 与模型
         uses: actions/cache@v4
         with:
@@ -56,10 +82,9 @@ jobs:
             build/ffmpeg
             models
             ~/AppData/Local/electron-builder/Cache
-          key: folia-deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'build/buildMnnRuntime.mjs', 'build/fetchModels.mjs', 'shared/modelManifest.json') }}
-
-      - name: 编译壁纸助手
-        run: node packaging/windows/build-wallpaper-helper.mjs
+            ~/Library/Caches/electron-builder
+            ~/.cache/electron-builder
+          key: folias-deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'build/buildMnnRuntime.mjs', 'build/fetchModels.mjs', 'shared/modelManifest.json') }}
 
       - name: 类型检查
         run: npm run typecheck
@@ -69,22 +94,62 @@ jobs:
           ELECTRON: 'true'
         run: npm run build
 
-      - name: 打包并发布
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder --win nsis --publish always --config.publish.channel=latest
-
-      - name: 打包（不发布）
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        run: npx electron-builder --win nsis --publish never
+      - name: 打包
+        run: npx electron-builder --publish never --config.publish.channel=latest
 
       - name: 上传安装包
         uses: actions/upload-artifact@v4
         with:
-          name: folias-windows
+          name: folias-${{ matrix.os }}
           path: |
             release/*.exe
-            release/*.yml
+            release/*.dmg
+            release/*.zip
+            release/*.deb
+            release/*.rpm
+            release/*.tar.gz
             release/*.blockmap
+            release/latest*.yml
           if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: 发布到 Releases
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载安装包
+        uses: actions/download-artifact@v4
+        with:
+          path: folias-artifacts
+
+      - name: 写入发布说明
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          version="${VERSION#v}"
+          {
+            echo "## Folias ${version}"
+            echo ""
+            echo "基于 Folia 0.7.25，功能全部保留，另外加上自定义全局快捷键。"
+            echo ""
+            echo "- 全局快捷键的修饰键和按键由用户按下整段组合键设定：任意修饰键组合（至少一个），支持字母、数字、F1–F24、空格、方向键、退格、删除、Home、End、PageUp、PageDown、Tab、Enter。"
+            echo "- 旧版本存下的快捷键绑定读出时自动补回 Ctrl+Alt+Shift，注册出来的组合与改动前一致。"
+            echo "- 其他功能、界面和使用方式与 Folia 0.7.25 相同。"
+            echo ""
+            echo "安装包：Windows（NSIS 安装程序）、macOS（dmg / zip，未签名）、Linux（deb / rpm / tar.gz）。"
+          } > release-notes.md
+
+      - name: 创建或更新 Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          mapfile -d '' files < <(find folias-artifacts -type f -print0)
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${files[@]}" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --title "Folias ${TAG#v}" --notes-file release-notes.md
+          else
+            gh release create "$TAG" "${files[@]}" --repo "$GITHUB_REPOSITORY" --title "Folias ${TAG#v}" --notes-file release-notes.md --target "$GITHUB_SHA"
+          fi
