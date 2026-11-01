@@ -1993,6 +1993,7 @@ export default {
     "gridPaletteHotkeyDesc": "Mặc định tắt: trên lưới, mọi phím ký tự đều là nội dung lọc, gồm cả S. Bật tùy chọn này để phím S mở bảng lệnh, các phím còn lại vẫn dùng để lọc.",
     "customShortcut": "Phím tắt tùy chỉnh",
     "customShortcutDesc": "Tự bấm tổ hợp của bạn để chạy một lệnh dùng được ở mọi màn hình.",
+    "customShortcutNote": "Tổ hợp phím bổ trợ tùy ý (ít nhất một), với chữ cái, chữ số, F1–F24, phím cách, phím mũi tên, Backspace, Delete và tương tự.",
     "customShortcutCommand": "Chạy",
     "customShortcutNoCommand": "Chưa chọn",
     "customShortcutTaken": "Tổ hợp này đã được gán cho phím tắt khác",

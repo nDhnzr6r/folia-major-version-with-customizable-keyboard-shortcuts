@@ -1993,6 +1993,7 @@ export default {
     "gridPaletteHotkeyDesc": "When off, S goes into the filter box like any other character.",
     "customShortcut": "Custom shortcut",
     "customShortcutDesc": "Press a combination of your own to run a command that works on any screen.",
+    "customShortcutNote": "Any modifier combination (at least one), with letters, digits, F1–F24, Space, the arrow keys, Backspace, Delete, and the like.",
     "customShortcutCommand": "Runs",
     "customShortcutNoCommand": "None selected",
     "customShortcutTaken": "That combination is already taken by another shortcut",

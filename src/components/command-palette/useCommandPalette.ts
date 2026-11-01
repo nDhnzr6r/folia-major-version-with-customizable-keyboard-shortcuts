@@ -499,6 +499,8 @@ export const useCommandPalette = ({
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            // 上一次空格的按下如果没等到松开（比如窗口失焦），这次按下就从头算，别让旧值挡住松开补录。
+            customShortcutFiredOnKeyDown.current = null;
             // A dialog is drawn over the palette and has the keyboard: under it no key opens the
             // palette or runs a command.
             if (hasOpenSheet()) {

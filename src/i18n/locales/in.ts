@@ -1993,6 +1993,7 @@ export default {
     "gridPaletteHotkeyDesc": "Saat mati, S masuk ke kotak filter seperti karakter lain.",
     "customShortcut": "Pintasan khusus",
     "customShortcutDesc": "Tekan kombinasi buatanmu sendiri untuk menjalankan perintah yang berlaku di semua tampilan.",
+    "customShortcutNote": "Kombinasi tombol pengubah bebas (minimal satu), dengan huruf, angka, F1–F24, Spasi, tombol panah, Backspace, Delete, dan sejenisnya.",
     "customShortcutCommand": "Menjalankan",
     "customShortcutNoCommand": "Belum dipilih",
     "customShortcutTaken": "Kombinasi itu sudah dipakai pintasan lain",

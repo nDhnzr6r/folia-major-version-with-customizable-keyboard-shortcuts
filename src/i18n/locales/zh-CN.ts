@@ -1993,6 +1993,7 @@ export default {
     "gridPaletteHotkeyDesc": "关闭时 S 和其他字符一样进入筛选框。",
     "customShortcut": "自定义快捷键",
     "customShortcutDesc": "自己按下组合键，运行一个在任何界面都可用的命令。",
+    "customShortcutNote": "修饰键随意搭配（至少一个），按键支持字母、数字、F1–F24、空格、方向键、退格、删除等。",
     "customShortcutCommand": "运行",
     "customShortcutNoCommand": "未选择",
     "customShortcutTaken": "这个组合已经被别的快捷键占用了",
