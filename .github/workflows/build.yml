@@ -1,0 +1,83 @@
+name: Build Windows
+
+# 每次推送到 main 自动出一个安装包，产物挂在 Actions 的 artifact 里，不碰 Releases。
+# 日常想验证打包有没有坏，看这个工作流就够了；正式发版走 Release。
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'img/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    name: 构建 Windows 安装包
+    runs-on: windows-latest
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v6
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 安装 Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+
+      - name: 缓存壁纸助手的编译结果
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packaging/windows/wallpaper-helper
+
+      - name: 缓存 ffmpeg、MNN 与模型
+        uses: actions/cache@v4
+        with:
+          path: |
+            build/mnn
+            build/ffmpeg
+            models
+            ~/AppData/Local/electron-builder/Cache
+          key: folia-deps-${{ runner.os }}-${{ hashFiles('package-lock.json', 'build/buildMnnRuntime.mjs', 'build/fetchModels.mjs', 'shared/modelManifest.json') }}
+
+      - name: 编译壁纸助手
+        run: node packaging/windows/build-wallpaper-helper.mjs
+
+      - name: 类型检查
+        run: npm run typecheck
+
+      - name: 构建前端
+        env:
+          ELECTRON: 'true'
+        run: npm run build
+
+      - name: 打包
+        run: npx electron-builder --win nsis --publish never
+
+      - name: 上传安装包
+        uses: actions/upload-artifact@v4
+        with:
+          name: folias-windows-${{ github.sha }}
+          path: |
+            release/*.exe
+            release/*.yml
+            release/*.blockmap
+          if-no-files-found: error
