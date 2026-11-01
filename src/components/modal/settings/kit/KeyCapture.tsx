@@ -68,6 +68,20 @@ export const KeyCapture: React.FC<KeyCaptureProps> = ({ value, onChange, validat
         if (!listening) {
             return;
         }
+        // Records the press that ends the waiting; a refused key keeps the field listening.
+        const record = (event: KeyboardEvent) => {
+            const key = readKey ? readKey(event) : event.key.toLowerCase();
+            const refusal = validate?.(key);
+            if (refusal) {
+                setReason(refusal);
+                setRefused(true);
+                return;
+            }
+            onChange(key);
+            setListening(false);
+            setRefused(false);
+        };
+
         const handleKeyDown = (event: KeyboardEvent) => {
             // Capture phase, and it stops here: the app's own keys listen for exactly the kind of
             // press that is being recorded. The listeners put on `window` in this phase before this
@@ -85,19 +99,26 @@ export const KeyCapture: React.FC<KeyCaptureProps> = ({ value, onChange, validat
                 setRefused(false);
                 return;
             }
-            const key = readKey ? readKey(event) : event.key.toLowerCase();
-            const refusal = validate?.(key);
-            if (refusal) {
-                setReason(refusal);
-                setRefused(true);
+            record(event);
+        };
+
+        // Alt+Space 的按下被 Windows 的窗口菜单吞掉（main.cjs 把菜单关了，按下仍然到不了页面），
+        // 只有松开能收到：按住 Alt 时空格松开也算这一次，组合键才录得进来。
+        const handleKeyUp = (event: KeyboardEvent) => {
+            if (event.key !== ' ' || event.repeat || !event.altKey) {
                 return;
             }
-            onChange(key);
-            setListening(false);
-            setRefused(false);
+            event.preventDefault();
+            event.stopPropagation();
+            record(event);
         };
+
         window.addEventListener('keydown', handleKeyDown, true);
-        return () => window.removeEventListener('keydown', handleKeyDown, true);
+        window.addEventListener('keyup', handleKeyUp, true);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown, true);
+            window.removeEventListener('keyup', handleKeyUp, true);
+        };
     }, [listening, onChange, readKey, validate]);
 
     return (

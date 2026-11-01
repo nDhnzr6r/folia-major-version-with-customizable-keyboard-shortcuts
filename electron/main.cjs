@@ -6338,6 +6338,14 @@ let isAppQuitting = false;
 
 let isSwappingMainWindow = false;
 
+// Alt+Space 是 Windows 的窗口系统菜单：Chromium 对无边框窗口也会先处理它，网页只收到 Alt 按下和
+// 空格松开，空格的按下到不了页面。录制快捷键靠按下记录，所以这里把菜单拦下来，组合键才录得进去。
+app.on('browser-window-created', (_event, window) => {
+  window.on('system-context-menu', (event) => {
+    event.preventDefault();
+  });
+});
+
 app.on('window-all-closed', () => {
   if (isSwappingMainWindow) {
     return;
