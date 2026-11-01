@@ -3,24 +3,20 @@
 </p>
 
 <div align="center">
-<a href="https://trendshift.io/repositories/71740?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-71740" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/71740" alt="chthollyphile%2Ffolia-major | Trendshift" width="250" height="55"/></a>
 
-# folia-major-version-with-customizable-keyboard-shortcuts
+# Folias
 
 Lyrics Reimagined // 辞曲新境
 
 [简体中文](README.md) | English
 
-[![GitHub release](https://img.shields.io/github/v/release/chthollyphile/folia-major?label=release)](https://github.com/chthollyphile/folia-major/releases)
-[![License](https://img.shields.io/github/license/chthollyphile/folia-major)](https://github.com/chthollyphile/folia-major/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/chthollyphile/folia-major?style=social)](https://github.com/chthollyphile/folia-major/stargazers)
+[![GitHub release](https://img.shields.io/github/v/release/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts?label=release)](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases)
+[![License](https://img.shields.io/github/license/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts)](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/blob/main/LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D24-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/chthollyphile/folia-major)
-[![Discord](https://img.shields.io/discord/1541051241822687232?logo=discord&logoColor=white&label=Join%20our%20Discord)](https://discord.gg/dMDBTHxeKd)
 
-[Get Folia](#get-folia)
+[Get Folias](#get-folias)
 ·
-[Deploy to Vercel](https://vercel.com/new/clone?repository-url=https://github.com/chthollyphile/folia-major)
+[Deploy to Vercel](https://vercel.com/new/clone?repository-url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts)
 ·
 [User Guide](https://folia-site.cielaniska.top/guide/)
 ·
@@ -28,9 +24,20 @@ Lyrics Reimagined // 辞曲新境
 
 </div>
 
-> This is a modified version of [Folia](https://github.com/chthollyphile/folia-major); its code comes from that project's author and the contributors who worked on it before this fork, under AGPL-3.0. The one difference from the original: the modifiers and keys of the global shortcuts are chosen by the user instead of the fixed Ctrl+Alt+Shift plus a letter or digit.
+> Folias is an independent music player. Its code comes from the [Folia](https://github.com/chthollyphile/folia-major) project and its contributors, under AGPL-3.0.
 >
-> Everything else, including the interface and the way it is used, is the same as the original; the original documentation still applies. Please file problems in this repository, not in the original one.
+> Why Folias exists: Folia's global shortcuts are fixed to Ctrl+Alt+Shift plus one letter or digit — the modifiers can't be changed, and keys like Space or the arrow keys can't be recorded. We asked for user-chosen combinations; Folia declined, so Folias does it.
+>
+> **Everything Folia has, Folias has. What Folia doesn't have, Folias has too.**
+>
+> The interface and the way it works are the same as Folia's, and Folia's documentation still applies. Please file problems in this repository.
+
+## Why Folias
+
+- **Shortcuts are yours**: any modifier combination (at least one), with letters, digits, F1–F24, Space, the arrow keys, Backspace, Delete, Home, End, PageUp, PageDown, Tab, and Enter.
+- **No missing features**: everything in Folia 0.7.25 is here, with the same interface and workflow.
+- **A version number you can read**: `01` is appended to Folia's version, so a build based on 0.7.25 is `0.7.2501`.
+- **Never behind**: new features from Folia will be followed; features Folia won't do get built here.
 
 ## About
 
@@ -45,7 +52,7 @@ To use Folias on a phone or in a browser, [deploy the web app to Vercel in one c
 > [!TIP]
 > - **GitHub**: [Latest Release](https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/releases/latest) has the Windows installer.
 >
-> For other options (web deployment, Docker, mobile), see [Get Folia](#get-folia) below.
+> For other options (web deployment, Docker, mobile), see [Get Folias](#get-folias) below.
 
 ## Showcase
 
@@ -122,12 +129,12 @@ Each lyric animation has its own typography, mood, and tunable parameters, givin
 | Local music | Import local audio files. Folias stores the index locally and never uploads file contents. See [Local Library Management](docs/local-library-management.md) (Chinese). |
 | Smart lyric matching | Local songs are matched to online lyrics and covers automatically; you can correct matches by hand. |
 | Local lyric files | Loads `.lrc`, `.vtt`, `.ttml`, `.qrc`, `.yrc`, and `.krc` files with the same name in the same folder, as well as embedded LRC lyrics. Supports the enhanced word-by-word formats produced by LDDC. |
-| Now Playing integration | Connects to a local [Now Playing](https://github.com/Widdit/now-playing-service/) service to take song, timeline, and lyric data from external players and drive Folia's stage view and full-screen lyrics. |
+| Now Playing integration | Connects to a local [Now Playing](https://github.com/Widdit/now-playing-service/) service to take song, timeline, and lyric data from external players and drive Folias' stage view and full-screen lyrics. |
 | AI themes | Generates immersive backgrounds and visual parameters from a song's mood and lyrics. |
 | Multi-platform | Deploy as a web app or install the packaged desktop app. |
 | Mods (experimental) | On desktop, Folium mods can add lyric animations, backgrounds, player-page layers, commands, and more. Install officially verified mods from the [mod market](https://folium-compound.cielaniska.top). See [Mods](#mods-folium-v1x). |
 
-## Get Folia
+## Get Folias
 
 The desktop app bundles both frontend and backend, so it works right after install.
 
@@ -135,11 +142,11 @@ The desktop app bundles both frontend and backend, so it works right after insta
 
 To put the web app online quickly, follow the [Vercel deployment guide](https://folia-site.cielaniska.top/guide/deploy-vercel).
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/chthollyphile/folia-major)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts)
 
 Folias also deploys to Cloudflare in one click; adapt the Vercel guide accordingly.
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chthollyphile/folia-major)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts)
 
 On Vercel and Cloudflare, QQ Music no longer needs a separate, always-on API instance: set `VITE_QQ_API_BASE` to `/api/qq` and add a `QQ_SESSION_SECRET` (a server-side secret, **without the `VITE_` prefix**). This setup supports login by scanning a QR code with WeChat or mobile QQ (mobile QQ requires qq-music-api 3.3.3 or later), and you must log in before playback. On Cloudflare you can also bind a Durable Object so QQ QR login uses a long-lived connection and gains QR login with the QQ Music app. For full steps, platform differences, and troubleshooting, see the [QQ Music deployment guide](docs/qq-music-deployment.md) (Chinese).
 
@@ -195,7 +202,7 @@ Folias offers an optional sync server, `sync-server`, that syncs appearance sett
 Deployment options:
 
 - **Cloudflare Workers / D1**: Serverless, no servers to maintain. Recommended.
-  [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chthollyphile/folia-major/tree/main/sync-server)
+  [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/tree/main/sync-server)
 - **Docker**: See the [Docker deployment folder](deploy/docker/README.md) for the image and Compose setup.
 - **Self-hosted Node.js**: Uses SQLite; suits local machines or environments where Docker is inconvenient.
 
@@ -238,4 +245,4 @@ Folias uses the [Apple Music-like Lyrics TTML word-by-word lyrics database](http
 
 ## License
 
-Folias is open source under the `AGPL-3.0` license.
+Folias is open source under the `AGPL-3.0` license. Its code comes from the [Folia](https://github.com/chthollyphile/folia-major) project and its contributors.

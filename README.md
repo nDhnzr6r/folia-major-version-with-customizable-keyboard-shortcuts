@@ -4,7 +4,7 @@
 
 <div align="center">
 
-# Folia（可以自定义快捷键版）
+# Folias
 
 Lyrics Reimagined // 辞曲新境
 
@@ -20,9 +20,20 @@ Lyrics Reimagined // 辞曲新境
 
 </div>
 
-> 这是 [Folia](https://github.com/chthollyphile/folia-major) 的一个修改版本，代码来自原作者 chthollyphile 与该项目此前的各位贡献者，遵循 AGPL-3.0。与原版的区别只有一处：全局快捷键的修饰键和按键由用户自己设定，不再固定为 Ctrl+Alt+Shift 加字母或数字。
+> Folias 是一个独立的音乐播放器，代码来自 [Folia](https://github.com/chthollyphile/folia-major) 项目与各位贡献者，遵循 AGPL-3.0。
 >
-> 其他功能、界面与使用方式与原版一致；原版文档仍然适用。遇到问题请在本仓库提 issue，不要提交到原版仓库。
+> 做 Folias 的理由：Folia 的全局快捷键固定为 Ctrl+Alt+Shift 加一个字母或数字，修饰键不能换，空格和方向键也按不出来。我们提出让用户自己按下组合键，Folia 不打算做，于是这件事在 Folias 里做成了。
+>
+> **Folia 有的功能，Folias 都有；Folia 没有的功能，Folias 也有。**
+>
+> 界面和使用方式与 Folia 一致，Folia 的文档仍然适用于 Folias。遇到问题请在本仓库提 issue。
+
+## 为什么是 Folias
+
+- **快捷键归用户**：修饰键随意搭配（至少一个），按键支持字母、数字、F1–F24、空格、方向键、退格、删除、Home、End、PageUp、PageDown、Tab、Enter。
+- **功能完整保留**：Folia 0.7.25 的功能都在，界面和使用方式不变。
+- **版本号看得懂**：在 Folia 的版本号后面加 `01`，例如基于 0.7.25 的版本叫 `0.7.2501`。
+- **以后也不落后**：Folia 新增的功能会跟进；Folia 不做的功能，在 Folias 里做。
 
 ## 项目简介
 
@@ -114,7 +125,7 @@ https://github.com/user-attachments/assets/704f195a-2194-434b-86e8-8f36290e5cc4
 | 本地音乐支持 | 可导入本地音频文件，在本地安全保存索引信息，不上传文件内容。详细用法见 [本地音乐库管理](docs/local-library-management.md)。 |
 | 智能歌词匹配 | 本地歌曲可自动匹配在线歌词与封面，也支持手动修正匹配结果。 |
 | 本地歌词文件识别 | 自动加载同目录同名 `.lrc`、`.vtt`、`.ttml`、`.qrc`、`.yrc`、`.krc` 歌词文件，或歌词文件内嵌 LRC 歌词。适配 LDDC 生成的增强型逐字歌词格式。 |
-| Now Playing 接入 | 支持通过本机 [Now Playing](https://github.com/Widdit/now-playing-service/) 服务接入外部播放器的歌曲、时间轴与歌词信息，并驱动 Folia 的舞台视图与全屏歌词渲染。 |
+| Now Playing 接入 | 支持通过本机 [Now Playing](https://github.com/Widdit/now-playing-service/) 服务接入外部播放器的歌曲、时间轴与歌词信息，并驱动 Folias 的舞台视图与全屏歌词渲染。 |
 | AI 主题生成 | 基于歌曲情绪与歌词内容生成沉浸式背景与视觉参数。 |
 | 多端体验 | 提供 Web 部署方式，同时支持桌面端打包分发。 |
 | 模组系统（实验性） | 桌面版可通过 Folium 模组添加歌词动画、背景、播放页图层、命令等，并从 [模组市场](https://folium-compound.cielaniska.top) 安装官方认证的模组。详见 [模组系统](#模组系统folium-v1x)。 |
@@ -127,11 +138,11 @@ https://github.com/user-attachments/assets/704f195a-2194-434b-86e8-8f36290e5cc4
 
 如果你希望快速上线 Web 版本，请阅读 [Vercel 一键部署指南](https://folia-site.cielaniska.top/guide/deploy-vercel) 来创建项目
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/chthollyphile/folia-major) 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts) 
 
 项目也支持一键部署到 Cloudflare，请参考 Vercel 的部署教程进行相应调整。
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chthollyphile/folia-major)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts)
 
 Vercel 与 Cloudflare 上的 QQ 音乐不再需要额外部署一个常驻 API 实例：把 `VITE_QQ_API_BASE` 填成 `/api/qq`，再配一个 `QQ_SESSION_SECRET`（服务端密钥，**不加 `VITE_` 前缀**）即可。这种形态支持微信扫码和手机 QQ 扫码登录（手机 QQ 扫码要 qq-music-api 3.3.3 或更高版本），且播放前必须先登录；Cloudflare 上可以再绑定一个 Durable Object，让 QQ 扫码改走长连接，并多一个 QQ 音乐 App 扫码。完整步骤、平台差异和排错方法见 [QQ 音乐部署指南](docs/qq-music-deployment.md)。
 
@@ -185,7 +196,7 @@ Folias 提供了可选的同步服务端 `sync-server`，用于在多个设备�
 支持以下部署方式：
 
 - **Cloudflare Workers / D1**：免服务器运维的 Serverless 部署，推荐使用。
-  [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/chthollyphile/folia-major/tree/main/sync-server)
+  [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/nDhnzr6r/folia-major-version-with-customizable-keyboard-shortcuts/tree/main/sync-server)
 - **Docker**：镜像与 Compose 入口见 [Docker 部署目录](deploy/docker/README.md)。
 - **Node.js 自托管**：使用 SQLite，适合本地或不方便使用 Docker 的环境。
 
@@ -228,6 +239,6 @@ Folias 会读取音频文件元数据、同目录歌词和封面，并可通过�
 
 ## 许可证
 
-本项目基于 `AGPL-3.0` 许可证开源，代码来自 [chthollyphile/folia-major](https://github.com/chthollyphile/folia-major)，本仓库是它的修改版本。
+本项目基于 `AGPL-3.0` 许可证开源，代码来自 [Folia](https://github.com/chthollyphile/folia-major) 项目与各位贡献者。
 
 按 AGPL-3.0 分发本仓库构建出的程序时，需要同时提供这份源码；修改时间与改动见本仓库的提交记录。
