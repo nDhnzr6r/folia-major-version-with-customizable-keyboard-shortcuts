@@ -176,7 +176,7 @@ test('hands S to the command list only once the setting says so', async ({ page 
 
 test('runs the listeners own Alt shortcut from anywhere', async ({ page }) => {
     await openTrackGrid(page);
-    await setInteractionSetting(page, { customShortcutLetter: 'j', customShortcutCommandId: 'navigate-player' });
+    await setInteractionSetting(page, { customShortcutBindings: [{ key: 'j', modifiers: ['alt'], commandId: 'navigate-player' }] });
 
     expect(await currentView(page)).toBe('home');
     await page.keyboard.press('Alt+j');
@@ -186,7 +186,7 @@ test('runs the listeners own Alt shortcut from anywhere', async ({ page }) => {
 
 test('binds a controls-tab action that used to need the panel open', async ({ page }) => {
     await openTrackGrid(page);
-    await setInteractionSetting(page, { customShortcutLetter: 'm', customShortcutCommandId: 'playback-mute' });
+    await setInteractionSetting(page, { customShortcutBindings: [{ key: 'm', modifiers: ['alt'], commandId: 'playback-mute' }] });
 
     expect(await isMuted(page)).toBe(false);
     await page.keyboard.press('Alt+m');
@@ -201,7 +201,7 @@ test('ignores an Alt shortcut whose letter has been claimed since', async ({ pag
     await openTrackGrid(page);
     // ':' 是执行模式的入口，但它没有 alt——真正会被拒的是绑到需要特定界面的命令上，
     // 那种绑定即使存进去了也不该开火。
-    await setInteractionSetting(page, { customShortcutLetter: 'j', customShortcutCommandId: 'panel-cover' });
+    await setInteractionSetting(page, { customShortcutBindings: [{ key: 'j', modifiers: ['alt'], commandId: 'panel-cover' }] });
 
     await page.keyboard.press('Alt+j');
     await page.waitForTimeout(400);

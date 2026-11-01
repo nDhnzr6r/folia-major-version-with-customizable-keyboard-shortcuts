@@ -39,8 +39,9 @@ test('a shortcut opens the picker with the panel closed', async ({ page }) => {
         const storeModulePath = '/src/stores/useInteractionSettingsStore.ts';
         const { useInteractionSettingsStore } = await import(storeModulePath);
         useInteractionSettingsStore.setState({
-            customShortcutLetter: 'p',
-            customShortcutCommandId: 'playback-add-to-playlist',
+            customShortcutBindings: [
+                { key: 'p', modifiers: ['alt'], commandId: 'playback-add-to-playlist' },
+            ],
         });
     });
 

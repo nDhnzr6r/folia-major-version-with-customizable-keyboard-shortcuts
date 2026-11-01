@@ -2,19 +2,18 @@ import { expect, test } from '@playwright/test';
 import { APP_VERSION, GUIDE_VERSION_STORAGE_KEY, waitForAppMounted } from '../helpers/appState';
 
 // test/ui/interactionSettingsSection.spec.ts
-// 确认这一分区在侧栏里、在「控制」这一组下、点得进去，三项设置都真的渲染出来，
-// 以及按键录制的四条规则：记下按键、拒绝并说明原因、不让这一次按键漏进 app、可以清除。
+// 确认这一分区在侧栏里、在「控制」这一组下、点得进去，设置真的渲染出来，
+// 以及按键录制的四条规则：记下整段组合键、拒绝并说明原因、不让这一次按键漏进 app、可以清除。
 
-// 按键框：「自定义快捷键」那一行里的按钮，名字是这一行的标题加上它显示的键；
-// 它的文字就是 Alt、加号和录到的键（或「未设置」「按下一个键…」）。
-const keyField = (page: import('@playwright/test').Page) => (
-    page.locator('[data-settings-row="customShortcut"]').getByRole('button', { name: /^Custom shortcut/ })
+// 按键框：第 N 条自定义快捷键的录制按钮，名字由这一行的标题和它显示的组合键组成。
+const keyField = (page: import('@playwright/test').Page, index = 1) => (
+    page.getByRole('button', { name: new RegExp(`^Shortcut ${index}\\b`) })
 );
 
 const storedShortcut = (page: import('@playwright/test').Page) => page.evaluate(async () => {
     const storeModulePath = '/src/stores/useInteractionSettingsStore.ts';
     const { useInteractionSettingsStore } = await import(storeModulePath);
-    return useInteractionSettingsStore.getState().customShortcutLetter;
+    return useInteractionSettingsStore.getState().customShortcutBindings[0];
 });
 
 const openInteractionSettings = async (page: import('@playwright/test').Page) => {
@@ -47,57 +46,60 @@ test('lists Shortcuts under App and opens it', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Shortcuts', exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Filter search' })).toBeVisible();
     await expect(page.getByRole('switch', { name: 'Open the command palette with S on a grid' })).toBeVisible();
-    await expect(keyField(page)).toBeVisible();
-    await expect(page.locator('[data-settings-row="customShortcut"]').getByRole('combobox', { name: /Runs/ })).toBeVisible();
+    await expect(keyField(page, 1)).toBeVisible();
+    await expect(keyField(page, 5)).toBeVisible();
+    await expect(page.getByRole('combobox', { name: 'Command for shortcut 1' })).toBeVisible();
 });
 
-test('records the shortcut key by capturing the next press', async ({ page }) => {
+test('records a whole combination by capturing the next press', async ({ page }) => {
     await openInteractionSettings(page);
-    // Alt 是画出来的、不可编辑的那一半；只有右边这个位子是录的。
-    await expect(keyField(page)).toHaveText('Alt+Not set');
+    await expect(keyField(page)).toHaveText('Not set');
 
     await keyField(page).click();
-    await expect(keyField(page)).toHaveText('Alt+Press a key…');
+    await expect(keyField(page)).toHaveText('Press a key…');
+    await page.keyboard.press('Control+j');
+
+    await expect(keyField(page)).toHaveText('Ctrl+J');
+    expect(await storedShortcut(page)).toMatchObject({ key: 'j', modifiers: ['control'] });
+});
+
+test('refuses a press without a modifier, and says why', async ({ page }) => {
+    await openInteractionSettings(page);
+    await keyField(page).click();
     await page.keyboard.press('j');
 
-    await expect(keyField(page)).toHaveText('Alt+J');
-    expect(await storedShortcut(page)).toBe('j');
+    await expect(page.getByText('Hold at least one modifier with the key')).toBeVisible();
+    // 还在等：拒绝一个组合不该把录制模式也一起关掉。
+    await expect(keyField(page)).toHaveText('Press a key…');
+
+    await page.keyboard.press('Control+j');
+    await expect(keyField(page)).toHaveText('Ctrl+J');
 });
 
-test('refuses a key it cannot bind, and says why', async ({ page }) => {
-    await openInteractionSettings(page);
-    await keyField(page).click();
-    await page.keyboard.press('1');
-
-    await expect(page.getByText('Letters A–Z only')).toBeVisible();
-    // 还在等：拒绝一个键不该把录制模式也一起关掉。
-    await expect(keyField(page)).toHaveText('Alt+Press a key…');
-
-    await page.keyboard.press('k');
-    await expect(keyField(page)).toHaveText('Alt+K');
-});
-
-test('does not let the captured key reach the app', async ({ page }) => {
+test('does not let the captured press reach the app', async ({ page }) => {
     await openInteractionSettings(page);
     await keyField(page).click();
 
-    // S 是播放页打开命令面板的键。录制期间它必须只被记下来，而不是同时把面板拉开。
+    // S 是播放页打开命令面板的键。录制期间它必须只算这次录入，而不是同时把面板拉开。
     await page.keyboard.press('s');
+    await expect(page.getByText('Hold at least one modifier with the key')).toBeVisible();
 
-    await expect(keyField(page)).toHaveText('Alt+S');
+    // Ctrl+K 本来也开面板；这里同样只该被拒绝，不该漏出去。
+    await page.keyboard.press('Control+k');
+    await expect(page.getByText('That combination is already taken by another shortcut')).toBeVisible();
     await expect(page.getByTestId('command-palette-panel')).toHaveCount(0);
 });
 
 test('clears the binding', async ({ page }) => {
     await openInteractionSettings(page);
     await keyField(page).click();
-    await page.keyboard.press('j');
-    await expect(keyField(page)).toHaveText('Alt+J');
+    await page.keyboard.press('Control+j');
+    await expect(keyField(page)).toHaveText('Ctrl+J');
 
-    await page.getByRole('button', { name: 'Clear' }).click();
+    await page.getByRole('button', { name: 'Clear' }).first().click();
 
-    await expect(keyField(page)).toHaveText('Alt+Not set');
-    expect(await storedShortcut(page)).toBeNull();
+    await expect(keyField(page)).toHaveText('Not set');
+    expect(await storedShortcut(page)).toMatchObject({ key: null });
 });
 
 test('lands on the section a command names, not the top of its page', async ({ page }) => {

@@ -8,9 +8,8 @@ import type { PonderRelativeRect } from '../../../../types/ponder';
 /**
  * 设置 · 快捷操作 · 命令窗口里「自定义快捷键」那一行，坐标系是那块面板。
  *
- * 真实那一组是一行两半：左边一对键帽（Alt 已经按下、旁边是待录的那一颗），右边一个
- * 命令下拉。Alt 画成常按下的样子而不是可编辑的一段，因为它在界面上就是不可改的 ——
- * 画成可录的话，这一章讲的那件事（录不出组合键）在图上就不成立。
+ * 真实那一组是五行，每行一对键帽加一个命令下拉。图里画一行作代表：左边是修饰键（按住的那颗），
+ * 右边是待录的按键，两个都由人按出来；右边的命令下拉只列「在哪儿都成立」的命令。
  */
 export const CUSTOM_SHORTCUT_GEOMETRY = {
     heading: { left: 0.04, top: 0.02, width: 0.34, height: 0.08 },
@@ -23,7 +22,7 @@ export const CUSTOM_SHORTCUT_GEOMETRY = {
     /** 右半边那个命令下拉，和展开之后压在它下面的那张列表。 */
     command: { right: 0.07, top: 0.46, width: 0.40, height: 0.18 },
     commandList: { right: 0.07, top: 0.66, width: 0.40, height: 0.30 },
-    /** 按到一颗已经被占掉的字母时，红字长在键帽下面。 */
+    /** 按到一段已经被占掉的组合时，红字长在键帽下面。 */
     rejection: { left: 0.07, top: 0.68, width: 0.42, height: 0.07 },
 } satisfies Record<string, PonderRelativeRect>;
 

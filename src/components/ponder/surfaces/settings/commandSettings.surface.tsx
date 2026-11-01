@@ -67,7 +67,7 @@ const KeyCap: React.FC<{
 /**
  * 自定义快捷键。
  *
- * 界面上没写出来的两件事，图上都得看得见：Alt 是固定的（所以画成一颗常按着的键帽），
+ * 界面上没写出来的两件事，图上都得看得见：组合键由人自己按下（所以左边画成按住修饰键的样子），
  * 命令下拉里的条目是筛过的（所以展开那一层要画成明显短于命令窗口里的完整列表）。
  */
 const PonderCustomShortcutSurface: React.FC<SurfaceProps> = ({ accent, line, outline, registerStateNode }) => (
@@ -77,7 +77,7 @@ const PonderCustomShortcutSurface: React.FC<SurfaceProps> = ({ accent, line, out
             <div className="rounded-xl border" style={{ ...relativeRectStyle(S.card), borderColor: outline }} />
             <CardCopy rect={S.copy} line={line} />
 
-            {/* Alt 不是录进去的，是印在那儿的：它画成一颗已经按下、且不参与编辑的键帽。 */}
+            {/* 修饰键和按键都是按出来的：左边画成按住的样子，右边是等着录的那一颗。 */}
             <KeyCap marker="data-ponder-shortcut-alt" rect={S.capAlt} line={line} outline={outline} pressed />
             <KeyCap marker="data-ponder-shortcut-key" rect={S.capKey} line={line} outline={outline} accent={accent} />
             <span

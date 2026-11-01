@@ -12,7 +12,8 @@ import { isPrimaryModifierPressed, isSecondaryModifierPressed } from '../../util
 import { useSettingsModalStore } from '../../stores/useSettingsModalStore';
 import { useAppViewStore } from '../../stores/useAppViewStore';
 import { useInteractionSettingsStore } from '../../stores/useInteractionSettingsStore';
-import { resolveCustomShortcutCommand } from './customShortcut';
+import { commandForCustomShortcut, resolveActiveCustomShortcuts } from './customShortcut';
+import { readGlobalShortcutChord } from './globalShortcuts/globalShortcutRules';
 import { useGlobalShortcuts } from './globalShortcuts/useGlobalShortcuts';
 import { runGlobalShortcutCommand } from './globalShortcuts/runGlobalShortcutCommand';
 
@@ -58,13 +59,16 @@ export const useCommandPalette = ({
     // Opt-in: `s` normally goes to the filter like any other letter, and the listener who wants it
     // back for the command list has to say so.
     const paletteHotkeyOnFilteringSurface = useInteractionSettingsStore(state => state.gridCommandPaletteHotkey);
-    const customShortcutLetter = useInteractionSettingsStore(state => state.customShortcutLetter);
-    const customShortcutCommandId = useInteractionSettingsStore(state => state.customShortcutCommandId);
-    const customShortcutCommand = useMemo(() => resolveCustomShortcutCommand(
-        customShortcutLetter,
-        customShortcutCommandId,
-        COMMAND_PALETTE_COMMANDS,
-    ), [customShortcutLetter, customShortcutCommandId]);
+    const customShortcutBindings = useInteractionSettingsStore(state => state.customShortcutBindings);
+    // Resolved through the same function the settings picker uses: a binding the picker would
+    // refuse cannot fire from a value left in storage.
+    const customShortcuts = useMemo(
+        () => resolveActiveCustomShortcuts(customShortcutBindings, COMMAND_PALETTE_COMMANDS),
+        [customShortcutBindings],
+    );
+    // Alt+Space 的按下被 Windows 的窗口菜单吞掉，只有松开收得到：记下按下已经触发过的组合，
+    // 松开那一步不要把它再来一遍。
+    const customShortcutFiredOnKeyDown = useRef<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
     const [matchQuery, setMatchQuery] = useState('');
@@ -506,23 +510,22 @@ export const useCommandPalette = ({
             // surface that reads bare characters outranks every modifier-free palette key, or the
             // same press would do two things at once.
 
-            // The listener's own shortcut. First, like the other modifier entries, and resolved
+            // The listener's own shortcuts. First, like the other modifier entries, and resolved
             // through the same function the settings picker uses — a binding the picker would
             // refuse cannot fire from a value left in storage.
-            if (customShortcutCommand
-                && event.altKey
-                && !isPrimaryModifierPressed(event)
-                && !isSecondaryModifierPressed(event)
-                && !event.shiftKey
-                && event.key.toLowerCase() === customShortcutLetter
-                && isCommandPaletteCommandEnabled(customShortcutCommand, context)
-            ) {
+            const customAccelerator = readGlobalShortcutChord(event);
+            const customCommand = commandForCustomShortcut(customShortcuts, customAccelerator);
+            if (customCommand && isCommandPaletteCommandEnabled(customCommand, context)) {
                 if (isBlocked) {
                     return;
                 }
 
+                // 空格按住 Alt 时按下到不了这里；真到了就记下来，让松开那一步别重复执行。
+                if (event.key === ' ') {
+                    customShortcutFiredOnKeyDown.current = customAccelerator;
+                }
                 event.preventDefault();
-                invokeCommand(customShortcutCommand);
+                invokeCommand(customCommand);
                 return;
             }
 
@@ -641,7 +644,30 @@ export const useCommandPalette = ({
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [context, customShortcutCommand, customShortcutLetter, filterCommand, invokeCommand, isBlocked, isOpen, open, openCommand, ownsBareKeys, paletteHotkeyOnFilteringSurface]);
+    }, [context, customShortcuts, filterCommand, invokeCommand, isBlocked, isOpen, open, openCommand, ownsBareKeys, paletteHotkeyOnFilteringSurface]);
+
+    // Alt+Space：Windows 把空格的按下交给了窗口菜单，网页只收得到松开。按住 Alt 时用松开补一次，
+    // 按下已经触发过的组合不再重复执行。
+    useEffect(() => {
+        const handleKeyUp = (event: KeyboardEvent) => {
+            if (event.key !== ' ' || !event.altKey || hasOpenSheet()) {
+                return;
+            }
+            const accelerator = readGlobalShortcutChord(event);
+            if (customShortcutFiredOnKeyDown.current === accelerator) {
+                customShortcutFiredOnKeyDown.current = null;
+                return;
+            }
+            const command = commandForCustomShortcut(customShortcuts, accelerator);
+            if (!command || !isCommandPaletteCommandEnabled(command, context) || isBlocked) {
+                return;
+            }
+            event.preventDefault();
+            invokeCommand(command);
+        };
+        window.addEventListener('keyup', handleKeyUp);
+        return () => window.removeEventListener('keyup', handleKeyUp);
+    }, [context, customShortcuts, invokeCommand, isBlocked]);
 
     return {
         activeIndex,

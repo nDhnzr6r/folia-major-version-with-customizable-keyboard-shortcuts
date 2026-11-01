@@ -4,20 +4,22 @@ import { useShallow } from 'zustand/react/shallow';
 import { isGridLibraryActive, useIsGridLibraryActive } from '../../../../library/app/gridLibraryActive';
 import { COMMAND_PALETTE_COMMANDS } from '../../../command-palette/commandRegistry';
 import { getCommandTitle } from '../../../command-palette/commandText';
-import { CUSTOM_SHORTCUT_LETTERS, isCustomShortcutLetterAvailable, isScopeIndependentCommand } from '../../../command-palette/customShortcut';
+import { isScopeIndependentCommand, refuseCustomShortcutChord, type CustomShortcutRefusal } from '../../../command-palette/customShortcut';
+import { formatGlobalShortcutPart, parseGlobalShortcutChord, readGlobalShortcutChord } from '../../../command-palette/globalShortcuts/globalShortcutRules';
 import { useInteractionSettingsStore } from '../../../../stores/useInteractionSettingsStore';
 import { useSettingsModalStore } from '../../../../stores/useSettingsModalStore';
 import { PRIMARY_MODIFIER_LABEL } from '../../../../utils/platform';
-import { Group, KeyCapture, Row, Segmented, Select, Toggle, Value, option, type SettingsGroupDef, type SettingsOptionDef } from '../kit';
+import { Group, KeyCapture, Row, Segmented, Select, Toggle, option, type SettingsGroupDef, type SettingsOptionDef } from '../kit';
 import { GLOBAL_SHORTCUTS_OPTIONS, GlobalShortcutsGroup } from './GlobalShortcutsGroup';
 import { useSettingsPage } from './settingsPageContext';
 
 // src/components/modal/settings/pages/InteractionPage.tsx
 // The 快捷操作 page: how a person reaches a command quickly. First the command palette: the three
-// commands pinned under it and the one shortcut a person defines themselves. Then, in the desktop
-// app, the system-wide playback shortcuts (GlobalShortcutsGroup). Then the grids: where a slide on
-// their action button leads (only the grid library UI has that button, so the row is drawn only
-// while it is in effect), and whether a bare S there filters or opens the palette.
+// commands pinned under it and the shortcuts a person defines themselves, each a combination of
+// modifiers and one key running a command anywhere in the app. Then, in the desktop app, the
+// system-wide playback shortcuts (GlobalShortcutsGroup). Then the grids: where a slide on their
+// action button leads (only the grid library UI has that button, so the row is drawn only while it
+// is in effect), and whether a bare S there filters or opens the palette.
 
 const PALETTE: SettingsGroupDef = { id: 'pinnedCommands', titleKey: 'options.settingsHeadingCommandPalette' };
 const GRIDS: SettingsGroupDef = { id: 'gridActionButton', titleKey: 'options.settingsHeadingGrids' };
@@ -31,6 +33,13 @@ const O = {
 
 export const OPTIONS: SettingsOptionDef[] = [...Object.values(O), ...GLOBAL_SHORTCUTS_OPTIONS];
 
+const REFUSAL_KEYS: Record<CustomShortcutRefusal, string> = {
+    'needs-modifier': 'options.globalShortcutNeedsModifier',
+    'unsupported-key': 'options.globalShortcutUnsupportedKey',
+    reserved: 'options.customShortcutTaken',
+    duplicate: 'options.customShortcutDuplicate',
+};
+
 const InteractionPage: React.FC = () => {
     const { t } = useTranslation();
     const { isElectron } = useSettingsPage();
@@ -42,12 +51,10 @@ const InteractionPage: React.FC = () => {
     const interaction = useInteractionSettingsStore(useShallow(state => ({
         slideTarget: state.gridActionButtonSlideTarget,
         paletteHotkey: state.gridCommandPaletteHotkey,
-        shortcutLetter: state.customShortcutLetter,
-        shortcutCommandId: state.customShortcutCommandId,
+        shortcutBindings: state.customShortcutBindings,
         setSlideTarget: state.setGridActionButtonSlideTarget,
         setPaletteHotkey: state.handleToggleGridCommandPaletteHotkey,
-        setShortcutLetter: state.setCustomShortcutLetter,
-        setShortcutCommandId: state.setCustomShortcutCommandId,
+        setShortcutBinding: state.setCustomShortcutBinding,
     })));
 
     // The titles of the whole registry, resolved once per language: every pick list here reads them.
@@ -62,14 +69,14 @@ const InteractionPage: React.FC = () => {
         ...commands.filter(command => command.worksAnywhere),
     ], [commands, t]);
 
-    // The field records whatever is pressed, so a key is refused here, with the reason. It asks the
-    // registry, so a hotkey added later refuses its own letter by itself.
-    const validateShortcutKey = useCallback((letter: string): string | null => {
-        if (!CUSTOM_SHORTCUT_LETTERS.includes(letter)) {
-            return t('options.customShortcutLettersOnly');
-        }
-        return isCustomShortcutLetterAvailable(letter, COMMAND_PALETTE_COMMANDS) ? null : t('options.customShortcutTaken');
-    }, [t]);
+    // One validator per slot, so a combination is refused against the other slots and the registry's
+    // own hotkeys. It asks the registry, so a hotkey added later reserves itself.
+    const validators = useMemo(() => interaction.shortcutBindings.map((_, slot) => (chord: string): string | null => {
+        const { key, modifiers } = parseGlobalShortcutChord(chord);
+        const refusal = refuseCustomShortcutChord(key, modifiers, slot, interaction.shortcutBindings, COMMAND_PALETTE_COMMANDS);
+        return refusal ? t(REFUSAL_KEYS[refusal]) : null;
+    }), [interaction.shortcutBindings, t]);
+    const readKey = useCallback((event: KeyboardEvent) => readGlobalShortcutChord(event), []);
 
     return (
         <>
@@ -89,21 +96,33 @@ const InteractionPage: React.FC = () => {
                         />
                     ))}
                 </Row>
-                <Row option={O.shortcut} hint={t('options.customShortcutDesc')}>
-                    <KeyCapture
-                        value={interaction.shortcutLetter}
-                        onChange={interaction.setShortcutLetter}
-                        validate={validateShortcutKey}
-                        prefix={['Alt']}
-                    />
-                    <Value>{t('options.customShortcutCommand')}</Value>
-                    <Select
-                        name={t('options.customShortcutCommand')}
-                        value={interaction.shortcutCommandId ?? ''}
-                        options={shortcutCommandOptions}
-                        onChange={value => interaction.setShortcutCommandId(value || null)}
-                    />
-                </Row>
+                <Row option={O.shortcut} hint={t('options.customShortcutDesc')} note={t('options.customShortcutNote')} />
+                {interaction.shortcutBindings.map((binding, slot) => (
+                    <Row key={slot} sub label={t('options.customShortcutSlot', { index: slot + 1 })}>
+                        <KeyCapture
+                            value={binding.key ? [...binding.modifiers, binding.key].join('+') : null}
+                            onChange={(next) => {
+                                if (!next) {
+                                    interaction.setShortcutBinding(slot, { key: null });
+                                    return;
+                                }
+                                const { key, modifiers } = parseGlobalShortcutChord(next);
+                                interaction.setShortcutBinding(slot, { key, modifiers });
+                            }}
+                            validate={validators[slot]}
+                            readKey={readKey}
+                            formatKey={formatGlobalShortcutPart}
+                        />
+                        <div className="w-[136px] shrink-0">
+                            <Select
+                                name={t('options.customShortcutCommandForSlot', { index: slot + 1 })}
+                                value={binding.commandId ?? ''}
+                                options={shortcutCommandOptions}
+                                onChange={value => interaction.setShortcutBinding(slot, { commandId: value || null })}
+                            />
+                        </div>
+                    </Row>
+                ))}
             </Group>
 
             {isElectron && <GlobalShortcutsGroup />}

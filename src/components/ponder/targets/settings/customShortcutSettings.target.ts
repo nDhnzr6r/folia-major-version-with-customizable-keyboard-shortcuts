@@ -6,7 +6,7 @@ import type { PonderAnchorSource, PonderSceneScript, PonderTargetDefinition } fr
 // 设置 · 快捷操作 · 命令窗口里的「自定义快捷键」。
 //
 // 这一组有两件事只写在代码里，界面上一个字都没有：
-// 一是修饰键固定成 Alt —— 字段只收一颗字母，想录 Ctrl+Shift+X 那种组合是录不进去的；
+// 一是组合键整段录制 —— 修饰键和按键都由用户按出来，只按修饰键不算数；
 // 二是命令下拉被 isScopeIndependentCommand 筛过 —— 只有「在哪儿都成立」的命令进得来，
 // 所以在命令窗口里找得到的某条命令，在这里可能根本不在列表上，而屏幕上不会解释为什么。
 

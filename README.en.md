@@ -34,7 +34,7 @@ Lyrics Reimagined // 辞曲新境
 
 ## Why Folias
 
-- **Shortcuts are yours**: any modifier combination (at least one), with letters, digits, F1–F24, Space, the arrow keys, Backspace, Delete, Home, End, PageUp, PageDown, Tab, and Enter.
+- **Shortcuts are yours**: five in-app and five system-wide, any modifier combination (at least one), with letters, digits, F1–F24, Space, the arrow keys, Backspace, Delete, Home, End, PageUp, PageDown, Tab, and Enter.
 - **No missing features**: everything in Folia 0.7.25 is here, with the same interface and workflow.
 - **A version number you can read**: `01` is appended to Folia's version, so a build based on 0.7.25 is `0.7.2501`.
 - **Never behind**: new features from Folia will be followed; features Folia won't do get built here.
