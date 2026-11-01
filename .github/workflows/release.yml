@@ -132,11 +132,11 @@ jobs:
           {
             echo "## Folias ${version}"
             echo ""
-            echo "基于 Folia 0.7.25，功能全部保留，另外加上自定义全局快捷键。"
+            echo "自定义快捷键现在可以设五条，修饰键和按键都由你按下整段组合键决定；全局快捷键也能录 Alt+Space、Shift+Alt+Space 这类组合，Windows 的窗口菜单不会再弹出来。"
             echo ""
-            echo "- 全局快捷键的修饰键和按键由用户按下整段组合键设定：任意修饰键组合（至少一个），支持字母、数字、F1–F24、空格、方向键、退格、删除、Home、End、PageUp、PageDown、Tab、Enter。"
-            echo "- 旧版本存下的快捷键绑定读出时自动补回 Ctrl+Alt+Shift，注册出来的组合与改动前一致。"
-            echo "- 其他功能、界面和使用方式与 Folia 0.7.25 相同。"
+            echo "- 应用内的自定义快捷键：五条，任意修饰键组合（至少一个）加字母、数字、F1–F24、空格、方向键、退格、删除等按键，每条绑一个命令；旧版 Alt+字母 的绑定会自动搬进第一条。"
+            echo "- 录制组合键时不再被窗口菜单打断：Alt+Space 的空格按下由系统菜单接管，现在菜单被拦下，松开时补录。"
+            echo "- 全局快捷键与之前一样：五条，任意修饰键组合，旧绑定自动补回 Ctrl+Alt+Shift。"
             echo ""
             echo "安装包：Windows（NSIS 安装程序）、macOS（dmg / zip，未签名）、Linux（deb / rpm / tar.gz）。"
           } > release-notes.md
