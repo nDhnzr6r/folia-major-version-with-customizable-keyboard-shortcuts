@@ -20,20 +20,16 @@ Lyrics Reimagined // 辞曲新境
 
 </div>
 
-> Folias 是一个独立的音乐播放器，代码来自 [Folia](https://github.com/chthollyphile/folia-major) 项目与各位贡献者，遵循 AGPL-3.0。
+> [!IMPORTANT]
+> **Folias 已停止更新。**
 >
-> 做 Folias 的理由：Folia 的全局快捷键固定为 Ctrl+Alt+Shift 加一个字母或数字，修饰键不能换，空格和方向键也按不出来。我们提出让用户自己按下组合键，Folia 不打算做，于是这件事在 Folias 里做成了。
+> Folia 现在已经支持自定义全局快捷键，修饰键和按键都能自己按，Folias 当初存在的理由没有了，所以这个分支不再维护：不会再有新版本、修复，也不会再跟随 Folia 的更新。
 >
-> **Folia 有的功能，Folias 都有；Folia 没有的功能，Folias 也有。**
->
-> 界面和使用方式与 Folia 一致，Folia 的文档仍然适用于 Folias。遇到问题请在本仓库提 issue。
+> 最后一个版本是 `0.7.2502`，仍然可以安装使用。新用户请直接使用 [Folia](https://github.com/chthollyphile/folia-major)。
 
-## 为什么是 Folias
+## 历史
 
-- **快捷键归用户**：应用内和全局快捷键各能设五条，修饰键随意搭配（应用内要按住 Ctrl、Alt 或 Win 之一），按键支持字母、数字、F1–F24、空格、方向键、退格、删除、Home、End、PageUp、PageDown、Tab、Enter。
-- **功能完整保留**：Folia 0.7.25 的功能都在，界面和使用方式不变。
-- **版本号看得懂**：在 Folia 的版本号后面加 `01`，例如基于 0.7.25 的版本叫 `0.7.2501`。
-- **以后也不落后**：Folia 新增的功能会跟进；Folia 不做的功能，在 Folias 里做。
+Folias 起于 Folia 不支持自定义全局快捷键：当时修饰键固定为 Ctrl+Alt+Shift，主键只能是字母和数字。我们提出让用户自己按下组合键，Folia 当时没有做，于是有了这个分支。2026 年 11 月，Folia 合并了自定义修饰键的改动，这件事不再需要单独维护一个版本。
 
 ## 项目简介
 

@@ -24,20 +24,16 @@ Lyrics Reimagined // 辞曲新境
 
 </div>
 
-> Folias is an independent music player. Its code comes from the [Folia](https://github.com/chthollyphile/folia-major) project and its contributors, under AGPL-3.0.
+> [!IMPORTANT]
+> **Folias is no longer maintained.**
 >
-> Why Folias exists: Folia's global shortcuts are fixed to Ctrl+Alt+Shift plus one letter or digit — the modifiers can't be changed, and keys like Space or the arrow keys can't be recorded. We asked for user-chosen combinations; Folia declined, so Folias does it.
+> Folia now supports custom global shortcuts — you choose the modifiers and the keys — so the reason this branch existed is gone. There will be no new versions, fixes, or upstream updates.
 >
-> **Everything Folia has, Folias has. What Folia doesn't have, Folias has too.**
->
-> The interface and the way it works are the same as Folia's, and Folia's documentation still applies. Please file problems in this repository.
+> The last version is `0.7.2502`; it still installs and works. New users should use [Folia](https://github.com/chthollyphile/folia-major).
 
-## Why Folias
+## History
 
-- **Shortcuts are yours**: five in-app and five system-wide, any modifier combination (in-app needs Ctrl, Alt, or Win held), with letters, digits, F1–F24, Space, the arrow keys, Backspace, Delete, Home, End, PageUp, PageDown, Tab, and Enter.
-- **No missing features**: everything in Folia 0.7.25 is here, with the same interface and workflow.
-- **A version number you can read**: `01` is appended to Folia's version, so a build based on 0.7.25 is `0.7.2501`.
-- **Never behind**: new features from Folia will be followed; features Folia won't do get built here.
+Folias started because Folia did not support custom global shortcuts: the modifiers were fixed to Ctrl+Alt+Shift and the key had to be a letter or digit. We asked for user-chosen combinations; Folia did not take it at the time, so this branch was made. In November 2026 Folia merged user-chosen modifiers, and the feature no longer needs a separate build.
 
 ## About
 
